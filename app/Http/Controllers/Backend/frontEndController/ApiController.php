@@ -18,6 +18,8 @@ use App\Models\AboutUs;
 class ApiController extends Controller
 {
 
+    // das ist für Api
+
     public function Asio()
     {
 
