@@ -14,6 +14,7 @@ class MigrationController extends Controller
         // استقبال المدخلات من الطلب
         $modelName = $request->input('model_name');
         $fields = $request->input('fields');
+        $relationships = $request->input('relationships');
 
         // استخدام Artisan لإنشاء نموذج مع Migration
         Artisan::call('make:model', [
@@ -51,11 +52,16 @@ class MigrationController extends Controller
             }
             $migrationContent .= ";\n";
         }
+        foreach ($relationships as $relationship) {
+            $migrationContent .= "            \$table->foreignId('{$relationship['foreign_key']}')->constrained('{$relationship['references_table']}')->onDelete('{$relationship['on_delete']}');\n";
+        }
 
         $migrationContent .= "                       $" . "table->timestamps();
                 });
             }
+       
 
+        
             /**
              * Reverse the migrations.
              *
