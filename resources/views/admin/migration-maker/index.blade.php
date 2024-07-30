@@ -17,11 +17,11 @@
 				<div class="col-12 col-lg-4 p-0">
 				</div>
 				<div class="col-12 col-lg-4 p-2 text-lg-end">
-					@can('migrations-create')
-					<a href="{{route('admin.migrations.create')}}">
+
+					<a href="#">
 					<span class="btn btn-primary"><span class="fas fa-plus"></span> إنشاء جدول</span>
 					</a>
-					@endcan
+
 				</div>
 			</div>
 			<div class="col-12 divider" style="min-height: 2px;"></div>
@@ -72,13 +72,13 @@
 
 
 						<td>
-							@can('migrations-read')
-							<a href="{{route('admin.migrations.show',$migration)}}">
+
+							<a href="#">
 							<span class="btn  btn-outline-primary btn-sm font-small mx-1">
 								<span class="fas fa-search "></span> عرض
 							</span>
 							</a>
-							@endcan
+
 
 
 
@@ -104,22 +104,22 @@
 							</a>
 							@endcan --}}
 
-							@can('migrations-update')
-							<a href="{{route('admin.migrations.edit',$migration)}}">
+
+							<a href="#">
 							<span class="btn  btn-outline-success btn-sm font-small mx-1">
-								<span class="fas fa-wrench "></span> تحكم
+								<span class="fas fa-wrench "></span> تعديل
 							</span>
 							</a>
-							@endcan
 
 
-							@can('migrations-delete')
-							<form method="POST" action="{{route('admin.migrations.destroy',$migration)}}" class="d-inline-block">@csrf @method("DELETE")
+
+
+							<form method="POST" action="#" class="d-inline-block">@csrf @method("DELETE")
 								<button class="btn  btn-outline-danger btn-sm font-small mx-1" onclick="var result = confirm('هل أنت متأكد من عملية الحذف ؟');if(result){}else{event.preventDefault()}">
 									<span class="fas fa-trash "></span> حذف
 								</button>
 							</form>
-							@endcan
+
 
 
 
