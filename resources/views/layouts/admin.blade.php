@@ -251,7 +251,17 @@
                         </div>
                     </a>
                     @endcan
+                    <a href="{{route('admin.migrations-maker.index')}}" class="col-12 px-0" >
+                        <div class="col-12 item-container px-0 d-flex " >
+                            <div style="width: 50px" class="px-3 text-center">
+                                <span class="fal fa-users font-2"> </span>
+                            </div>
+                            <div style="width: calc(100% - 50px)" class="px-2 item-container-title">
+                                 المستخدمين
 
+                            </div>
+                        </div>
+                    </a>
                     @can('users-read')
                     <a href="{{route('admin.messages.index')}}" class="col-12 px-0">
                         <div class="col-12 item-container px-0 d-flex">
@@ -319,7 +329,7 @@
 
 
                                     {{-- <li><a href="{{route('admin.cards.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>البطاقات التعريفية</a></li> --}}
-                       
+
                                     <li><a href="{{route('admin.articles.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>المقالات</a></li>
                                     <li><a href="{{route('admin.clients.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span> فريق العمل</a></li>
                                     <li><a href="{{route('admin.slider.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>الواجهة الرئيسية </a></li>
@@ -369,7 +379,7 @@
                             </div> --}}
                             <div class="col-12 px-0" >
                                 <ul class="sub-item font-1" style="list-style:none;">
-{{-- 
+{{--
                                     @can('plugins-read')
                                     <li><a href="{{route('admin.plugins.index')}}" style="font-size: 16px;"><span class="fal fa-box-open px-2" style="width: 28px;font-size: 15px;"></span> كل الاضافات
 

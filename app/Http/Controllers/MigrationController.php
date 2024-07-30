@@ -6,9 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Database\Migrations\MigrationRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class MigrationController extends Controller
 {
+
+
+    public function index()
+    {
+        $migrations = DB::table('migrations')->get();
+
+        return view('admin.migration-maker.index', compact('migrations'));
+    }
+
     public function createModelWithCustomMigration(Request $request)
     {
         // استقبال المدخلات من الطلب
@@ -59,9 +70,9 @@ class MigrationController extends Controller
         $migrationContent .= "                       $" . "table->timestamps();
                 });
             }
-       
 
-        
+
+
             /**
              * Reverse the migrations.
              *

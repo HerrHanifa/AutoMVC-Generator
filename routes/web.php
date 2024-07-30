@@ -49,6 +49,7 @@ use App\Http\Controllers\Backend\frontEndController\indexController;
 # Frontend Controllers
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\FrontendProfileController;
+use App\Http\Controllers\MigrationController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
@@ -190,6 +191,8 @@ Route::prefix('admin')->middleware(['auth','ActiveAccount'])->name('admin.')->gr
             Route::get('/',[BackendSettingController::class,'index'])->name('index');
             Route::put('/update',[BackendSettingController::class,'update'])->name('update');
         });
+
+        Route::get('migrations-maker',[MigrationController::class,'index'])->name('migrations-maker.index');
     });
 
     Route::prefix('upload')->name('upload.')->group(function(){
