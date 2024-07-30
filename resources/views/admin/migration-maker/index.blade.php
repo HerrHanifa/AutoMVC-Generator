@@ -51,7 +51,7 @@
 					<tr>
 						<td>{{$migration->id}}</td>
 
-						<td>{{$migration->migration}}</td>
+						<td>{{substr_replace($migration->migration, '', 0 , 25 )}}</td>
 						{{-- <td>{{$migration->email}}</td> --}}
 
 						{{-- @if(auth()->migration()->can('articles-read'))

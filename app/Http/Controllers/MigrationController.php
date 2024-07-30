@@ -16,6 +16,7 @@ class MigrationController extends Controller
     public function index()
     {
         $migrations = DB::table('migrations')->get();
+    
 
         return view('admin.migration-maker.index', compact('migrations'));
     }
