@@ -71,17 +71,23 @@
                  const numFields = document.getElementById('column_count').value;
                  columnsContainer.innerHTML = '';
 
+                 const columnDiv = document.createElement('div');
+                 columnDiv.classList.add('col-12', 'p-2', 'row');
+
                  for (let i = 1; i <= numFields; i++) {
-                     const columnDiv = document.createElement('div');
-                     columnDiv.classList.add('col-12', 'col-lg-6', 'p-2', 'row');
 
                      const labelDiv = document.createElement('div');
-                     labelDiv.classList.add('col-12');
+                     labelDiv.classList.add('col-6','pt-5');
                      labelDiv.textContent = `العمود ${i}`;
                      columnDiv.appendChild(labelDiv);
 
+                     const labelSelect = document.createElement('div');
+                     labelSelect.classList.add('col-3','pt-5');
+                     labelSelect.textContent = `نوع البيانات`;
+                     columnDiv.appendChild(labelSelect);
+
                      const inputDiv = document.createElement('div');
-                     inputDiv.classList.add('col-12', 'pt-3');
+                     inputDiv.classList.add('col-6', 'pt-3');
 
                      const nameInput = document.createElement('input');
                      nameInput.type = 'text';
@@ -92,8 +98,10 @@
 
                      columnDiv.appendChild(inputDiv);
 
+
+
                      const selectDiv = document.createElement('div');
-                     selectDiv.classList.add('col-12', 'pt-3');
+                     selectDiv.classList.add('col-6', 'pt-3');
 
                      const typeSelect = document.createElement('select');
                      typeSelect.classList.add('form-control', 'select2-select');
@@ -117,8 +125,9 @@
                      selectDiv.appendChild(typeSelect);
                      columnDiv.appendChild(selectDiv);
 
-                     columnsContainer.appendChild(columnDiv);
-                 }
+                    }
+
+                    columnsContainer.appendChild(columnDiv);
 
                  // عرض زر الإرسال بعد توليد الحقول
                  document.querySelector('button[type="submit"]').style.display = 'block';
