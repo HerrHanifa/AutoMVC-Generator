@@ -50,7 +50,7 @@
                      <div class="col-12 p-3">
                          <button type="button" id="add-relation" class="btn btn-primary">إضافة علاقة</button>
                      </div>
-                     <div id="relations-container" class="col-12 p-3 row"></div>
+                     <div id="relations-container"></div>
 
                      <div class="col-12 p-3">
                          <button type="submit" style="display: none;" class=" btn btn-success">إنشاء</button>
@@ -134,51 +134,55 @@
                              name: input.value
                          });
                      });
-                    //  var migrations = $migrations_name
+                     var migrations = @json($migrations_name);
 
                      columnsContainer.innerHTML = '';
                      relationsContainer.innerHTML = '';
 
 
-                 const columnDiv = document.createElement('div');
-                 columnDiv.classList.add('col-12', 'col-lg-6', 'p-2', 'row');
+                 const relationDiv = document.createElement('div');
+                 relationDiv.classList.add('col-12', 'col-lg-6', 'p-2', 'row');
 
                  //select ال foreign key
-                 const selectDiv = document.createElement('div');
-                 selectDiv.classList.add('col-12', 'pt-3');
-                    const typeSelect = document.createElement('select');
-                    typeSelect.classList.add('form-control', 'select2-select');
-                    typeSelect.name = `relations[][column_name]`;
+                 const selectForeignkey = document.createElement('div');
+                 selectForeignkey.classList.add('col-12', 'pt-3');
+                    const selectDiv = document.createElement('select');
+                    selectDiv.classList.add('form-control', 'select2-select');
+                    selectDiv.name = `relations[][column_name]`;
 
                     columnData.forEach (column => {
-                        const stringOption = document.createElement('option');
-                        stringOption.value = column.name;
-                        stringOption.textContent = column.name;
-                        typeSelect.appendChild(stringOption);
+                        const Option = document.createElement('option');
+                        Option.value = column.name;
+                        Option.textContent = column.name;
+                        selectDiv.appendChild(Option);
                     });
 
-                    selectDiv.appendChild(typeSelect);
-                    columnDiv.appendChild(selectDiv);
+                    selectForeignkey.appendChild(selectDiv);
+                    relationDiv.appendChild(selectForeignkey);
 
                     // select for table
 
-                //     const selectDiv = document.createElement('div');
-                //  selectDiv.classList.add('col-12', 'pt-3');
-                //     const typeSelect = document.createElement('select');
-                //     typeSelect.classList.add('form-control', 'select2-select');
-                //     typeSelect.name = `relations[][column_name]`;
+                    const selectTable = document.createElement('div');
+                 selectTable.classList.add('col-12', 'pt-3');
+                    const selectDiv2 = document.createElement('select');
+                    selectDiv2.classList.add('form-control', 'select2-select');
+                    selectDiv2.name = `relations[][column_name]`;
 
-                //     migrations.forEach (migration => {
-                //         const stringOption = document.createElement('option');
-                //         stringOption.value = migration;
-                //         stringOption.textContent = migration;
-                //         typeSelect.appendChild(stringOption);
-                //     });
+                    // const textOption = document.createElement('option');
+                    //  textOption.value = 'text';
+                    //  textOption.textContent = 'نص طويل';
+                    //  selectDiv2.appendChild(textOption);
+                    migrations.forEach (migration => {
+                        const stringOption = document.createElement('option');
+                        stringOption.value = migration;
+                        stringOption.textContent = migration;
+                        selectDiv2.appendChild(stringOption);
+                    });
 
-                //     selectDiv.appendChild(typeSelect);
-                //     columnDiv.appendChild(selectDiv);
+                    selectTable.appendChild(selectDiv2);
+                    relationDiv.appendChild(selectTable);
 
-                 relationsContainer.appendChild(columnDiv);
+                 relationsContainer.appendChild(relationDiv);
 
              });
 
