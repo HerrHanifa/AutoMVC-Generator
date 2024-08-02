@@ -136,16 +136,30 @@
                      });
                      var migrations = @json($migrations_name);
 
-                     columnsContainer.innerHTML = '';
                      relationsContainer.innerHTML = '';
 
 
                  const relationDiv = document.createElement('div');
-                 relationDiv.classList.add('col-12', 'col-lg-6', 'p-2', 'row');
+                 relationDiv.classList.add('col-12', 'p-2', 'row');
 
+
+                 const labelforeign = document.createElement('div');
+                 labelforeign.classList.add('col-4');
+                 labelforeign.textContent = `foreign key column`;
+                 relationDiv.appendChild(labelforeign);
+
+                 const labelrelation = document.createElement('div');
+                labelrelation.classList.add('col-4');
+                labelrelation.textContent = `type relation`;
+                relationDiv.appendChild(labelrelation);
+
+                const labeltable = document.createElement('div');
+                labeltable.classList.add('col-4');
+                labeltable.textContent = `table refrence`;
+                relationDiv.appendChild(labeltable);
                  //select ال foreign key
                  const selectForeignkey = document.createElement('div');
-                 selectForeignkey.classList.add('col-12', 'pt-3');
+                 selectForeignkey.classList.add('col-4', 'pt-3');
                     const selectDiv = document.createElement('select');
                     selectDiv.classList.add('form-control', 'select2-select');
                     selectDiv.name = `relations[][column_name]`;
@@ -163,15 +177,11 @@
                     // select for table
 
                     const selectTable = document.createElement('div');
-                 selectTable.classList.add('col-12', 'pt-3');
+                 selectTable.classList.add('col-4', 'pt-3');
                     const selectDiv2 = document.createElement('select');
                     selectDiv2.classList.add('form-control', 'select2-select');
-                    selectDiv2.name = `relations[][column_name]`;
+                    selectDiv2.name = `relations[][table_name]`;
 
-                    // const textOption = document.createElement('option');
-                    //  textOption.value = 'text';
-                    //  textOption.textContent = 'نص طويل';
-                    //  selectDiv2.appendChild(textOption);
                     migrations.forEach (migration => {
                         const stringOption = document.createElement('option');
                         stringOption.value = migration;
@@ -181,6 +191,24 @@
 
                     selectTable.appendChild(selectDiv2);
                     relationDiv.appendChild(selectTable);
+                    //select for relation
+
+                    const selectRelation = document.createElement('div');
+                    selectRelation.classList.add('col-4', 'pt-3');
+                    const selectDiv3 = document.createElement('select');
+                    selectDiv3.classList.add('form-control', 'select2-select');
+                    selectDiv3.name = `relations[][relation_name]`;
+                    const onetooneOption = document.createElement('option');
+                     onetooneOption.value = 'One To One';
+                     onetooneOption.textContent = 'One To One';
+                     selectDiv3.appendChild(onetooneOption);
+                    const onetomanyOption = document.createElement('option');
+                     onetomanyOption.value = 'One To Many';
+                     onetomanyOption.textContent = 'One To Many';
+                     selectDiv3.appendChild(onetomanyOption);
+
+                     selectRelation.appendChild(selectDiv3);
+                    relationDiv.appendChild(selectRelation);
 
                  relationsContainer.appendChild(relationDiv);
 
