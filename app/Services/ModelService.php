@@ -18,7 +18,7 @@ class ModelService
     public function createModel($tableName, $fillable = [], $hidden = [], $relations = [])
     {
         // تحويل اسم الجدول إلى اسم موديل
-        $modelName = ucfirst(camel_case($tableName));
+        $modelName = ucfirst(camel_case('foo_bar')($tableName));
 
         // مسار ملف الموديل
         $modelPath = app_path("Models/{$modelName}.php");
@@ -83,7 +83,7 @@ EOD;
 EOD;
     }
 }
- 
+
 <<<EOD
 مثال على Api:
 {

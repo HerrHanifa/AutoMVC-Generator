@@ -1,200 +1,203 @@
  @extends('layouts.admin')
-@section('content')
-    <div class="col-12 p-3">
-        <!-- breadcrumb -->
-        <x-bread-crumb :breads="[
-            ['url' => url('/admin'), 'title' => 'لوحة التحكم', 'isactive' => false],
-            ['url' => route('admin.users.index'), 'title' => 'قاعدة البيانات', 'isactive' => false],
-            ['url' => '#', 'title' => 'اضافة [جدول]', 'isactive' => true],
-        ]">
-        </x-bread-crumb>
-        <!-- /breadcrumb -->
-        {{-- <button id="myButton">اضغط هنا</button>
+ @section('content')
+     <div class="col-12 p-3">
+         <!-- breadcrumb -->
+         <x-bread-crumb :breads="[
+             ['url' => url('/admin'), 'title' => 'لوحة التحكم', 'isactive' => false],
+             ['url' => route('admin.users.index'), 'title' => 'قاعدة البيانات', 'isactive' => false],
+             ['url' => '#', 'title' => 'اضافة [جدول]', 'isactive' => true],
+         ]">
+         </x-bread-crumb>
+         <!-- /breadcrumb -->
 
-        <script>
-            function myFunction() {
-                // قم بتغيير لون الخلفية عند الضغط على الزر
-                document.body.style.backgroundColor = "lightblue";
-            }
-        </script> --}}
-        <form method="POST" action="{{ route('admin.migrations-maker.store') }}">
-            @csrf
-            <div>
-                <label for="num_fields">عدد الحقول:</label>
-                <input type="number" name="num_fields" id="num_fields">
-                <button id="generate-fields">التالي</button>
-            </div>
-            <div id="fields-container"></div>
-            <button type="submit" style="display: none;">إرسال</button>
-        </form>
+         <div class="col-12 col-lg-12 p-0 ">
 
 
+             <form id="validate-form" class="row" enctype="multipart/form-data" method="POST"
+                 action="{{ route('admin.migrations-maker.store') }}">
+                 @csrf
+
+                 <div class="col-12 col-lg-8 p-0 main-box">
+                     <div class="col-12 px-0">
+                         <div class="col-12 px-3 py-3">
+                             <span class="fas fa-info-circle"></span> إضافة جديد
+                         </div>
+                         <div class="col-12 divider" style="min-height: 2px;"></div>
+                     </div>
+
+                     <div class="col-12 p-3 row">
+                         <div class="col-12 col-lg-6 p-2">
+                             <div class="col-12">
+                                 الاسم الجدول
+                             </div>
+                             <div class="col-12 pt-3">
+                                 <input type="text" name="name_table" required minlength="3" maxlength="190"
+                                     class="form-control" value="{{ old('name_table') }}">
+                             </div>
+                         </div>
+                         <div class="col-12 col-lg-6 p-2 row">
+                             <label class="col-9" for="num_fields">عدد الحقول:</label>
+                             <div class="col-9 pt-3">
+                                 <input type="number" name="column_count" id="column_count" class="form-control">
+                             </div>
+                             <div class="col-3 pt-3">
+                                 <button class=" btn btn-success" id="generate-fields">التالي</button>
+                             </div>
+                         </div>
+
+                     </div>
+                     <div name="column" id="fields-container"></div>
+                     <div class="col-12 p-3">
+                         <button type="button" id="add-relation" class="btn btn-primary">إضافة علاقة</button>
+                     </div>
+                     <div id="relations-container" class="col-12 p-3 row"></div>
+
+                     <div class="col-12 p-3">
+                         <button type="submit" style="display: none;" class=" btn btn-success">إنشاء</button>
+                     </div>
+                 </div>
+             </form>
+         </div>
+     </div>
+     <script>
+         document.addEventListener('DOMContentLoaded', () => {
+             const generateButton = document.getElementById('generate-fields');
+             const columnsContainer = document.getElementById('fields-container');
+             const addRelationButton = document.getElementById('add-relation');
+             const relationsContainer = document.getElementById('relations-container');
+
+             generateButton.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 const numFields = document.getElementById('column_count').value;
+                 columnsContainer.innerHTML = '';
+
+                 for (let i = 1; i <= numFields; i++) {
+                     const columnDiv = document.createElement('div');
+                     columnDiv.classList.add('col-12', 'col-lg-6', 'p-2', 'row');
+
+                     const labelDiv = document.createElement('div');
+                     labelDiv.classList.add('col-12');
+                     labelDiv.textContent = `العمود ${i}`;
+                     columnDiv.appendChild(labelDiv);
+
+                     const inputDiv = document.createElement('div');
+                     inputDiv.classList.add('col-12', 'pt-3');
+
+                     const nameInput = document.createElement('input');
+                     nameInput.type = 'text';
+                     nameInput.name = `column[${i}][name]`;
+                     nameInput.classList.add('form-control');
+                     nameInput.value = '{{ old('column[name]') }}'; // استبدل هذا بالقيمة الافتراضية المناسبة
+                     inputDiv.appendChild(nameInput);
+
+                     columnDiv.appendChild(inputDiv);
+
+                     const selectDiv = document.createElement('div');
+                     selectDiv.classList.add('col-12', 'pt-3');
+
+                     const typeSelect = document.createElement('select');
+                     typeSelect.classList.add('form-control', 'select2-select');
+                     typeSelect.name = `column[${i}][type]`;
+
+                     const stringOption = document.createElement('option');
+                     stringOption.value = 'string';
+                     stringOption.textContent = 'نص';
+                     typeSelect.appendChild(stringOption);
+
+                     const integerOption = document.createElement('option');
+                     integerOption.value = 'integer';
+                     integerOption.textContent = 'عدد صحيح';
+                     typeSelect.appendChild(integerOption);
+
+                     const textOption = document.createElement('option');
+                     textOption.value = 'text';
+                     textOption.textContent = 'نص طويل';
+                     typeSelect.appendChild(textOption);
+
+                     selectDiv.appendChild(typeSelect);
+                     columnDiv.appendChild(selectDiv);
+
+                     columnsContainer.appendChild(columnDiv);
+                 }
+
+                 // عرض زر الإرسال بعد توليد الحقول
+                 document.querySelector('button[type="submit"]').style.display = 'block';
+             });
+             addRelationButton.addEventListener('click', (event) => {
+                 const numFields = document.getElementById('column_count').value;
+//اسناد قيم الاعمدة الى متغير
+                     const inputs = document.querySelectorAll('input[name^="column"]');
+                     columnData = [];
+
+                     inputs.forEach(input => {
+                         columnData.push({
+                             name: input.value
+                         });
+                     });
+                    //  var migrations = $migrations_name
+
+                     columnsContainer.innerHTML = '';
+                     relationsContainer.innerHTML = '';
 
 
-        <div class="col-12 col-lg-12 p-0 ">
+                 const columnDiv = document.createElement('div');
+                 columnDiv.classList.add('col-12', 'col-lg-6', 'p-2', 'row');
 
+                 //select ال foreign key
+                 const selectDiv = document.createElement('div');
+                 selectDiv.classList.add('col-12', 'pt-3');
+                    const typeSelect = document.createElement('select');
+                    typeSelect.classList.add('form-control', 'select2-select');
+                    typeSelect.name = `relations[][column_name]`;
 
-            <form id="validate-form" class="row" enctype="multipart/form-data" method="POST"
-                action="{{ route('admin.migrations-maker.store') }}">
-                @csrf
-
-                <div class="col-12 col-lg-8 p-0 main-box">
-                    <div class="col-12 px-0">
-                        <div class="col-12 px-3 py-3">
-                            <span class="fas fa-info-circle"></span> إضافة جديد
-                        </div>
-                        <div class="col-12 divider" style="min-height: 2px;"></div>
-                    </div>
-                    <div class="col-12 p-3 row">
-
-
-
-                       {{-- <form method="POST" action="{{ route('process_form') }}">
-                    @csrf
-                        <div>
-                            <label for="num_fields">عدد الحقول:</label>
-                            <input type="number" name="num_fields" id="num_fields">
-                            <button id="generate-fields">التالي</button>
-                        </div>
-                        <div id="fields-container"></div>
-                        <div class="col-12 p-3">
-                            <button class="btn btn-success" type="submit" style="display: none;">إرسال</button>
-                        </div>
-                        </form> --}}
-
-
-
-
-
-                        {{-- <form method="POST" action="{{ route('admin.migrations-maker.store') }}">
-                            @csrf
-                            <div>
-                                <label for="table_name">اسم الجدول:</label>
-                                <input type="text" name="table_name" id="table_name">
-                            </div>
-                            <div>
-                                <label for="column_count">عدد الأعمدة:</label>
-                                <input type="number" name="column_count" id="column_count">
-                            </div>
-                            <div id="columns"></div>
-                            <button type="submit">إنشاء Migration</button>
-                        </form> --}}
-
-
-
-                        <div class="col-12 col-lg-6 p-2">
-                            <div class="col-12">
-                                الاسم الجدول
-                            </div>
-                            <div class="col-12 pt-3">
-                                <input type="text" name="name_table" required minlength="3" maxlength="190"
-                                    class="form-control" value="{{ old('name_table') }}">
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-lg-6 p-2">
-                            <div class="col-12">
-                                عدد الحقول
-                            </div>
-                            <div class="col-12 pt-3">
-                                <input type="number" name="column_count" class="form-control"
-                                    value="{{ old('column_count') }}">
-                            </div>
-                        </div>
-                        <div class="col-12 p-3">
-                            <button class="btn btn-success"  id="generate-fields">التالي</button>
-                        </div>
-
-
-                    </div>
-                    <div class="col-12 p-3 row" id="columns"></div>
-                </div>
-
-                <div class="col-12 p-3">
-                    <button class="btn btn-success" style="display: none;" id="submitEvaluation">حفظ</button>
-                </div>
-            </form>
-            {{-- <script>
-                $(document).ready(function() {
-                    $('#generate-fields').click(function(e) {
-                        e.preventDefault();
-                        var numFields = $('#column_count').val();
-                        $('#columns').empty();
-                        for (var i = 1; i <= numFields; i++) {
-                            $('#columns').append(`
-                                <div class="col-12 col-lg-6 p-2">
-                                    <div class="col-12">
-                                      : ${i} العمود
-                                    </div>
-                                    <div class="col-12 pt-3">
-                                        <input type="text" name="column[${i}][name]" class="form-control"
-                                            value="{{ old('column[name]') }}">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6 p-2">
-                                    <select class="col-12 pt-3 form-control select2-select" name="column[${i}][type]">
-                                        <option value="string">نص</option>
-                                        <option value="integer">عدد صحيح</option>
-                                        <option value="text">نص طويل</option>
-                                    </select>
-                                </div>
-                            `);
-                        }
-                        // عرض زر الإرسال بعد توليد الحقول
-                        $('button[type="submit"]').show();
+                    columnData.forEach (column => {
+                        const stringOption = document.createElement('option');
+                        stringOption.value = column.name;
+                        stringOption.textContent = column.name;
+                        typeSelect.appendChild(stringOption);
                     });
-                });
-            </script> --}}
 
-             {{-- <script>
-                            $(document).ready(function() {
-                                $('#column_count').on('change', function() {
-                                    var count = $(this).val();
-                                    var columnsDiv = $('#columns');
-                                    columnsDiv.empty();
-                                    for (var i = 1; i <= count; i++) {
-                                        columnsDiv.append(`
-                                    <div>
-                                        <label for="column_${i}_name">اسم العمود ${i}:</label>
-                                        <input type="text" name="column_${i}_name" id="column_${i}_name">
-                                        <label for="column_${i}_type">نوع البيانات:</label>
-                                        <select name="column_${i}_type">
-                                            <option value="string">نص</option>
-                                            <option value="integer">عدد صحيح</option>
-                                            <option value="text">نص طويل</option>
-                                            </select>
-                                    </div>
-                                `);
-                                    }
-                                });
-                            });
-                        </script> --}}
+                    selectDiv.appendChild(typeSelect);
+                    columnDiv.appendChild(selectDiv);
 
-            {{-- <script>
-                $(document).ready(function() {
-                    $('#column_count').on('change', function() {
-                        var count = $(this).val();
-                        var columnsDiv = $('#columns');
-                        columnsDiv.empty();
-                        for (var i = 1; i <= count; i++) {
-                            columnsDiv.append(`
-                            <div>
-                                <label for="column_${i}_name">اسم العمود ${i}:</label>
-                                <input type="text" name="column_${i}_name" id="column_${i}_name">
-                                <label for="column_${i}_type">نوع البيانات:</label>
-                                <select name="column_${i}_type">
-                                    <option value="string">نص</option>
-                                    <option value="integer">عدد صحيح</option>
-                                    <option value="text">نص طويل</option>
-                                    </select>
-                            </div>
-                        `);
-                        }
-                    });
-                });
-            </script> --}}
+                    // select for table
+
+                //     const selectDiv = document.createElement('div');
+                //  selectDiv.classList.add('col-12', 'pt-3');
+                //     const typeSelect = document.createElement('select');
+                //     typeSelect.classList.add('form-control', 'select2-select');
+                //     typeSelect.name = `relations[][column_name]`;
+
+                //     migrations.forEach (migration => {
+                //         const stringOption = document.createElement('option');
+                //         stringOption.value = migration;
+                //         stringOption.textContent = migration;
+                //         typeSelect.appendChild(stringOption);
+                //     });
+
+                //     selectDiv.appendChild(typeSelect);
+                //     columnDiv.appendChild(selectDiv);
+
+                 relationsContainer.appendChild(columnDiv);
+
+             });
+
+
+
+
+
+         });
+     </script>
+     {{-- <div class="col-12 col-lg-6 p-2">
+        <div class="col-12">
+            الصلاحية
         </div>
-    </div>
-
-
-@endsection
+        <div class="col-12 pt-3">
+            <select class="form-control select2-select" name="roles[]" multiple required>
+                @foreach ($roles as $role)
+                    <option value="{{$role->id}}">{{$role->display_name}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div> --}}
+ @endsection
