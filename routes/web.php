@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CardsApiController;
 use App\Http\Controllers\Api\ClientsApiController;
 use App\Http\Controllers\Api\OurSolutionApiController;
 use App\Http\Controllers\Api\ServicesApiController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\BackendAdminController;
 use App\Http\Controllers\Backend\BackendNotificationsController;
@@ -191,8 +192,14 @@ Route::prefix('admin')->middleware(['auth','ActiveAccount'])->name('admin.')->gr
             Route::get('/',[BackendSettingController::class,'index'])->name('index');
             Route::put('/update',[BackendSettingController::class,'update'])->name('update');
         });
+        Route::prefix('migrations-maker')->name('migrations-maker.')->group(function (){
 
-        Route::get('migrations-maker',[MigrationController::class,'index'])->name('migrations-maker.index');
+            Route::get('/',[MigrationController::class,'index'])->name('index');
+            Route::get('/create',[MigrationController::class,'create'])->name('create');
+            Route::post('/create',[MigrationController::class,'store'])->name('store');
+            Route::get('/{table}',[MigrationController::class,'show'])->name('show');
+        });
+
     });
 
     Route::prefix('upload')->name('upload.')->group(function(){

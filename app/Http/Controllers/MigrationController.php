@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Database\Migrations\MigrationRepositoryInterface;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class MigrationController extends Controller
 {
@@ -16,9 +17,23 @@ class MigrationController extends Controller
     public function index()
     {
         $migrations = DB::table('migrations')->get();
-    
+
 
         return view('admin.migration-maker.index', compact('migrations'));
+    }
+    public function create(){
+        return view('admin.migration-maker.create');
+    }
+    public function store(Request $request){
+        return 'تم الاستقبال';
+    }
+    public function show(Request $request){
+        $table_name = $request->table;
+        // dd($table);
+        $columns = Schema::getColumnListing($table_name);
+        // dd($table_name , $columns);
+        $data = DB::table($table_name)->limit(10)->get();
+        return view('admin.migration-maker.show',compact('columns' , 'data' , 'table_name'));
     }
 
     public function createModelWithCustomMigration(Request $request)

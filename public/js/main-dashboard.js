@@ -29,14 +29,14 @@ $("[name='title'],[name='slug'],[name='meta_description']").on('keypress',functi
 $("[name='title'],[name='slug'],[name='description_ar'],[name='description_en'],[name='meta_description']").append(function(){
     $(this).parent().find('.last_appended_counter').remove();
     $(this).parent().append('<div class="col-12 p-2 last_appended_counter"><span class="d-inline-block" style="font-size:13px">عدد الحروف <span style="font-weight:bolder;color:#007469;font-size:15px">'+$(this).val().length+'</span> حرفاً</span></div>');
-}); 
+});
 $(document).ready(function() {
     $('.select2-select').select2();
 });
 setTimeout(function(){
     $('#loading-image-container').fadeOut();
 },500);
-$('input[type="file"]').on('change',function(e){ 
+$('input[type="file"]').on('change',function(e){
     $('#upload_'+$(this).attr('rand_key')).remove();
     var rand_key = (Math.random() + 1).toString(36).substring(7);
     $(this).attr('rand_key',rand_key);
@@ -58,4 +58,33 @@ $('.item-container').on('click',function(){
     $(this).siblings().find('.sub-item').slideToggle('fast');
 });
 $('#home-dashboard-divider').css('width','40%');
+});
+$(document).ready(function() {
+    $('#generate-fields').click(function(e) {
+        e.preventDefault();
+        var numFields = $('#column_count').val();
+        $('#columns').empty();
+        for (var i = 1; i <= numFields; i++) {
+            $('#columns').append(`
+                <div class="col-12 col-lg-6 p-2">
+                    <div class="col-12">
+                      : ${i} العمود
+                    </div>
+                    <div class="col-12 pt-3">
+                        <input type="text" name="column[${i}][name]" class="form-control"
+                            value="{{ old('column[name]') }}">
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 p-2">
+                    <select class="col-12 pt-3 form-control select2-select" name="column[${i}][type]">
+                        <option value="string">نص</option>
+                        <option value="integer">عدد صحيح</option>
+                        <option value="text">نص طويل</option>
+                    </select>
+                </div>
+            `);
+        }
+        // عرض زر الإرسال بعد توليد الحقول
+        $('button[type="submit"]').show();
+    });
 });
