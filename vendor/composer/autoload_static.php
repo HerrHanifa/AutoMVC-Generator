@@ -50,6 +50,7 @@ class ComposerStaticInitfffa06a019c2bbb984dc33f9fc4a7d77
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
         '101b35f72e0ccb1b5ef72aa86bba3ef9' => __DIR__ . '/..' . '/yoeunes/toastr/src/helpers.php',
+        '06c0f3bae6ab9e69501e19f10a76b989' => __DIR__ . '/../..' . '/app/Helpers/makingFilesHelper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -826,6 +827,7 @@ class ComposerStaticInitfffa06a019c2bbb984dc33f9fc4a7d77
         'App\\Helpers\\SettingsHelper' => __DIR__ . '/../..' . '/app/Helpers/SettingsHelper.php',
         'App\\Helpers\\UploadFilesHelper' => __DIR__ . '/../..' . '/app/Helpers/UploadFilesHelper.php',
         'App\\Helpers\\UserSystemInfoHelper' => __DIR__ . '/../..' . '/app/Helpers/UserSystemInfoHelper.php',
+        'App\\Helpers\\makingFilesHelper' => __DIR__ . '/../..' . '/app/Helpers/makingFilesHelper.php',
         'App\\Http\\Controllers\\Api\\AboutUsApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AboutUsApiController.php',
         'App\\Http\\Controllers\\Api\\ArticalApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/ArticalApiController.php',
         'App\\Http\\Controllers\\Api\\BaseApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/BaseApiController.php',
@@ -955,6 +957,9 @@ class ComposerStaticInitfffa06a019c2bbb984dc33f9fc4a7d77
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Services\\ControllerGeneratorService' => __DIR__ . '/../..' . '/app/Services/ControllerGeneratorService.php',
+        'App\\Services\\FunctionGeneratorService' => __DIR__ . '/../..' . '/app/Services/FunctionGeneratorService.php',
+        'App\\Services\\MigrationService' => __DIR__ . '/../..' . '/app/Services/MigrationService.php',
         'App\\Traits\\Articaltrait' => __DIR__ . '/../..' . '/app/Traits/Articaltrait.php',
         'App\\Units\\ModulesUnit' => __DIR__ . '/../..' . '/app/Units/ModulesUnit.php',
         'App\\View\\Components\\AppLayout' => __DIR__ . '/../..' . '/app/View/Components/AppLayout.php',

@@ -43,8 +43,16 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Modules\\": "Modules/"
-        }
+        
+        },
+        "files": [
+            "app/Helpers/makingFilesHelper.php"
+        ]
+      
+    
+
     },
+ 
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
