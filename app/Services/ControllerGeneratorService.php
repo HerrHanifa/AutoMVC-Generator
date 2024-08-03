@@ -17,6 +17,8 @@ class ControllerGeneratorService
             $fileName = Str::studly($functionName) . 'Function';
             $functionFiles[$functionName] = $fileName;
         }
+        // Extract the model name from the controller name
+        $modelName = str_replace('Controller', '', $controllerName);
 
         // Extract traits and methods
         foreach ($functionFiles as $functionName => $fileName) {
@@ -40,7 +42,7 @@ class ControllerGeneratorService
         $controllerPath = app_path("Http/Controllers/{$controllerName}.php");
 
         // Generate the controller template
-        $controllerTemplate = $this->generateControllerTemplate($controllerName, $traits, $methods, $modelPath);
+        $controllerTemplate = $this->generateControllerTemplate($controllerName, $traits, $methods, $modelName);
 
         // Save the controller file
         File::put($controllerPath, $controllerTemplate);
