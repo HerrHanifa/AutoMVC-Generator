@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 class ControllerGeneratorController extends Controller
 {
-    public function createController(Request $request)
+    public function createController($controllerName, $functions)
     {
         $controllerName = $request->input('controller_name');
         $functions = $request->input('functions');

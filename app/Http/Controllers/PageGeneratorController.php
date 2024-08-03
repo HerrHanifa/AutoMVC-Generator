@@ -5,28 +5,29 @@ namespace App\Http\Controllers;
 use App\Services\ModelService;
 use App\Services\ControllerGeneratorService;
 use App\Services\MigrationService;
-use App\Services\RouteGeneratorService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class PageGeneratorController extends Controller
 {
     protected $ModelService;
-    protected $controllerGeneratorService;
+    protected $ControllerGeneratorService;
     protected $MigrationService;
-    protected $routeGeneratorService;
+
 
     public function __construct(
         ModelService $ModelService,
-        // ControllerGeneratorService $controllerGeneratorService,
+        ControllerGeneratorService $ControllerGeneratorService,
         MigrationService $MigrationService,
-        // RouteGeneratorService $routeGeneratorService
+   
     ) {
         $this->ModelService = $ModelService;
-        // $this->controllerGeneratorService = $controllerGeneratorService;
+        $this->ControllerGeneratorService = $ControllerGeneratorService;
         $this->MigrationService = $MigrationService;
-        // $this->routeGeneratorService = $routeGeneratorService;
+
     }
 
     public function createPage(Request $request)
@@ -41,9 +42,9 @@ class PageGeneratorController extends Controller
 
         $tableName = $request->input('table_name');
         $columns = $request->input('columns');
-      
+     $controllerName= ucfirst(Str::camel($tableName)) . 'Controller';
         // $controllerName = $request->input('controller_name');
-        // $functions = $request->input('functions');
+        $functions = $request->input('functions');
 
             // Generate Migration
         $this->MigrationService->generateMigrationContent($tableName, $columns);
@@ -57,15 +58,15 @@ $this->ModelService->createModel($tableName, $namescolumns);
 
 
         // Generate Controller
-        $this->controllerGeneratorService->createController($controllerName, $functions);
+        $this->ControllerGeneratorService->createController($controllerName, $functions);
         // Generate Views
-        $this->viewGeneratorService->createViews($tableName);
+        // $this->viewGeneratorService->createViews($tableName);
 
     
         // Generate Routes
-        foreach ($functions as $function) {
-            $this->routeGeneratorService->addRoute($controllerName, $function, 'web');
-        }
+        // foreach ($functions as $function) {
+        //     $this->routeGeneratorService->addRoute($controllerName, $function, 'web');
+        // }
 
         return response()->json(['message' => 'Page created successfully!']);
     }
