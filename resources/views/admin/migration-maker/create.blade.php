@@ -14,7 +14,7 @@
 
 
              <form id="validate-form" class="row" enctype="multipart/form-data" method="POST"
-                 action="{{ route('admin.migrations-maker.store') }}">
+                 action="{{ route('admin.Pages-maker.createPage') }}">
                  @csrf
 
                  <div class="col-12 col-lg-8 p-0 main-box">
@@ -31,7 +31,7 @@
                                  الاسم الجدول
                              </div>
                              <div class="col-12 pt-3">
-                                 <input type="text" name="name_table" required minlength="3" maxlength="190"
+                                 <input type="text" name="table_name" required minlength="3" maxlength="190"
                                      class="form-control" value="{{ old('name_table') }}">
                              </div>
                          </div>
@@ -46,7 +46,7 @@
                          </div>
 
                      </div>
-                     <div name="column" id="fields-container"></div>
+                     <div name="columns" id="fields-container"></div>
                      <div class="col-12 p-3">
                          <button type="button" id="add-relation" class="btn btn-primary">إضافة علاقة</button>
                      </div>
@@ -91,9 +91,9 @@
 
                      const nameInput = document.createElement('input');
                      nameInput.type = 'text';
-                     nameInput.name = `column[${i}][name]`;
+                     nameInput.name = `columns[${i}][name]`;
                      nameInput.classList.add('form-control');
-                     nameInput.value = '{{ old('column[name]') }}'; // استبدل هذا بالقيمة الافتراضية المناسبة
+                     nameInput.value = '{{ old('columns[name]') }}'; // استبدل هذا بالقيمة الافتراضية المناسبة
                      inputDiv.appendChild(nameInput);
 
                      columnDiv.appendChild(inputDiv);
@@ -105,7 +105,7 @@
 
                      const typeSelect = document.createElement('select');
                      typeSelect.classList.add('form-control', 'select2-select');
-                     typeSelect.name = `column[${i}][type]`;
+                     typeSelect.name = `columns[${i}][type]`;
 
                      const stringOption = document.createElement('option');
                      stringOption.value = 'string';

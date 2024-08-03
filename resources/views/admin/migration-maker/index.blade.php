@@ -4,7 +4,7 @@
         <!-- breadcrumb -->
         <x-bread-crumb :breads="[
             ['url' => url('/admin'), 'title' => 'لوحة التحكم', 'isactive' => false],
-            ['url' => route('admin.migrations-maker.index'), 'title' => 'قواعد البيانات', 'isactive' => true],
+            ['url' => route('admin.Pages-maker.index'), 'title' => 'قواعد البيانات', 'isactive' => true],
         ]">
         </x-bread-crumb>
         <!-- /breadcrumb -->
@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-12 col-lg-4 p-2 text-lg-end">
 
-                        <a href="{{ route('admin.migrations-maker.create') }}">
+                        <a href="{{ route('admin.Pages-maker.create') }}">
                             <span class="btn btn-primary"><span class="fas fa-plus"></span> إنشاء جدول</span>
                         </a>
 
@@ -57,7 +57,7 @@
 
                                     <td>
 
-                                        <a href="{{route('admin.migrations-maker.show',$table)}}">
+                                        <a href="{{route('admin.Pages-maker.show',$table)}}">
                                             <span class="btn  btn-outline-primary btn-sm font-small mx-1">
                                                 <span class="fas fa-search "></span> عرض
                                             </span>

@@ -50,7 +50,7 @@ use App\Http\Controllers\Backend\frontEndController\indexController;
 # Frontend Controllers
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\FrontendProfileController;
-use App\Http\Controllers\MigrationController;
+use App\Http\Controllers\PageGeneratorController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
@@ -192,12 +192,12 @@ Route::prefix('admin')->middleware(['auth','ActiveAccount'])->name('admin.')->gr
             Route::get('/',[BackendSettingController::class,'index'])->name('index');
             Route::put('/update',[BackendSettingController::class,'update'])->name('update');
         });
-        Route::prefix('migrations-maker')->name('migrations-maker.')->group(function (){
+        Route::prefix('Pages-maker')->name('Pages-maker.')->group(function (){
 
-            Route::get('/',[MigrationController::class,'index'])->name('index');
-            Route::get('/create',[MigrationController::class,'create'])->name('create');
-            Route::post('/create',[MigrationController::class,'store'])->name('store');
-            Route::get('/{table}',[MigrationController::class,'show'])->name('show');
+            Route::get('/',[PageGeneratorController::class,'index'])->name('index');
+            Route::get('/create',[PageGeneratorController::class,'create'])->name('create');
+            Route::post('/createPage',[PageGeneratorController::class,'createPage'])->name('createPage');
+            Route::get('/{table}',[PageGeneratorController::class,'show'])->name('show');
         });
 
     });

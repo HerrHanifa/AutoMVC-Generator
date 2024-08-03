@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Str;
 class ModelService
 {
     /**
@@ -15,10 +15,14 @@ class ModelService
      * @param array $relations
      * @return void
      */
-    public function createModel($tableName, $fillable = [], $hidden = [], $relations = [])
+    public function createModel($tableName, $columns = [], $hidden = null, $relations = null)
     {
+        $fillable = $columns ? "['" . implode("', '", $columns) . "']" : "[]";
+        $hiddenFields = $hidden ? "['" . implode("', '", $hidden) . "']" : "[]";
+
+
         // تحويل اسم الجدول إلى اسم موديل
-        $modelName = ucfirst(camel_case('foo_bar')($tableName));
+        $modelName= ucfirst(Str::camel($tableName));
 
         // مسار ملف الموديل
         $modelPath = app_path("Models/{$modelName}.php");
@@ -33,9 +37,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class {$modelName} extends Model
 {
-    protected \$table = '{$tableName}';
-    protected \$fillable = ['" . implode("', '", $fillable) . "'];
-    protected \$hidden = ['" . implode("', '", $hidden) . "'];
+      protected \$table = '{$tableName}';
+    protected \$fillable = {$fillable};
+    protected \$hidden = {$hiddenFields};
 
     {$this->generateRelations($relations)}
 }
@@ -51,14 +55,14 @@ EOD;
      * @param array $relations
      * @return string
      */
-    private function generateRelations($relations)
+    private function generateRelations($relations=null)
     {
         $relationMethods = '';
-
+if($relations){
         foreach ($relations as $relation) {
             $relationMethods .= $this->generateRelationMethod($relation);
         }
-
+    }
         return $relationMethods;
     }
 

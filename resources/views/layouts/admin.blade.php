@@ -251,7 +251,7 @@
                         </div>
                     </a>
                     @endcan
-                    <a href="{{route('admin.migrations-maker.index')}}" class="col-12 px-0" >
+                    <a href="{{route('admin.Pages-maker.index')}}" class="col-12 px-0" >
                         <div class="col-12 item-container px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-table font-2"> </span>

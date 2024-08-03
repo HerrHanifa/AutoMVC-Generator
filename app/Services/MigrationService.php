@@ -1,15 +1,18 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+
 class MigrationService
 {
-    public static function generateMigrationContent($modelName, $fields, $relationships)
+    public static function generateMigrationContent($modelName, $fields, $relationships=null)
     {
       
         $fieldsContent = self::generateFieldsContent($fields);
         $relationshipsContent = self::generateRelationshipsContent($relationships);
 
-        return <<<EOD
+        $migrationContent = <<<EOD
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -44,6 +47,14 @@ class Create{$modelName}Table extends Migration
     }
 }
 EOD;
+
+        // تحديد مسار الملف
+        $filePath = database_path('migrations/' . date('Y_m_d_His') . '_create_' . Str::snake(Str::pluralStudly($modelName)) . '_table.php');
+
+        // كتابة المحتوى إلى الملف
+        File::put($filePath, $migrationContent);
+
+
     }
 
     private static function generateFieldsContent($fields)
@@ -58,10 +69,13 @@ EOD;
 
     private static function generateRelationshipsContent($relationships)
     {
+    
         $content = '';
+        if ($relationships) {
         foreach ($relationships as $relationship) {
             $content .= "\$table->foreignId('{$relationship['foreign_key']}')->constrained('{$relationship['references_table']}')->onDelete('{$relationship['on_delete']}');\n";
         }
+    }
         return $content;
     }
 }
