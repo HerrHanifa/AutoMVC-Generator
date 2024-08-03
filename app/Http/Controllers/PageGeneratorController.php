@@ -57,15 +57,15 @@ $this->ModelService->createModel($tableName, $namescolumns);
 
 
         // Generate Controller
-        // $this->controllerGeneratorService->createController($controllerName, $functions);
+        $this->controllerGeneratorService->createController($controllerName, $functions);
         // Generate Views
-        // $this->viewGeneratorService->createViews($tableName);
+        $this->viewGeneratorService->createViews($tableName);
 
     
         // Generate Routes
-        // foreach ($functions as $function) {
-        //     $this->routeGeneratorService->addRoute($controllerName, $function, 'web');
-        // }
+        foreach ($functions as $function) {
+            $this->routeGeneratorService->addRoute($controllerName, $function, 'web');
+        }
 
         return response()->json(['message' => 'Page created successfully!']);
     }
@@ -84,8 +84,19 @@ $this->ModelService->createModel($tableName, $namescolumns);
         foreach($migrations as $migration){
             $migrations_name[] = substr_replace(substr_replace($migration->migration, '', 0, 25),'',-6);
         }
-        // dd($migrations_name);
 
-        return view('admin.migration-maker.create' , compact('migrations_name'));
+        $functionFiles = scandir(app_path('Functions'));
+$functions = [];
+foreach ($functionFiles as $file) {
+    if (preg_match('/Function\.php$/', $file)) {
+        $functionName = Str::camel(str_replace('Function.php', '', $file));
+        $functions[$functionName] = $functionName;
+    }
+}
+
+
+
+
+        return view('admin.migration-maker.create' , compact('migrations_name','functions'));
     }
 }

@@ -3,21 +3,36 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+
 class ControllerGeneratorService 
 {
     public function createController($controllerName, $functions)
     {
         app("MakingFilesHelper");
         app("RouteHelper");
-        
-        $controllerPath = app_path("Http/Controllers/{$controllerName}.php");
-
-        $functionTemplates = '';
-        foreach ($functions as $function) {
-            $functionTemplates .= $this->generateFunctionTemplate($function['name']);
+        $methods = '';
+        $traits = '';
+        foreach ($traitNames as $traitName) {
+            $traits .= "use \\App\\Functions\\{$traitName};\n";
+    
+            // Load the trait file content
+            $traitPath = __DIR__ . "/app/Functions/{$traitName}.php"; // Adjust the path if necessary
+            if (file_exists($traitPath)) {
+                $fileContent = file_get_contents($traitPath);
+    
+                // Extract method bodies from the trait file content
+                preg_match_all('/public function [a-zA-Z0-9_]+\([^\)]*\)\s*\{[^}]*\}/', $fileContent, $matches);
+                foreach ($matches[0] as $method) {
+                    $methods .= $method . "\n";
+                }
+            }
         }
 
-        $controllerTemplate = $this->generateControllerTemplate($controllerName, $functionTemplates);
+        $controllerPath = app_path("Http/Controllers/{$controllerName}.php");
+
+
+        $controllerTemplate = $this->generateControllerTemplate($controllerName, $traits, $methods);
 
         File::put($controllerPath, $controllerTemplate);
 
@@ -26,32 +41,27 @@ class ControllerGeneratorService
         return response()->json(['message' => 'Controller created successfully']);
     }
 
-    private function generateFunctionTemplate($functionName)
-    {
-        return <<<EOD
 
-    public function {$functionName}(Request \$request)
+    private function generateControllerTemplate($controllerName, $traits,$methods)
     {
-        // function body here
-    }
-EOD;
-    }
-
-    private function generateControllerTemplate($controllerName, $functions)
-    {
-        return <<<EOD
+       
+    return <<<EOD
 <?php
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+ {$traits}
 
 class {$controllerName} extends Controller
 {
-{$functions}
+   
+
+    {$methods}
 }
 EOD;
     }
+
 
 
 }
