@@ -46,11 +46,23 @@
                     <button type="button" id="add-relation" class="btn btn-primary">إضافة علاقة</button>
                 </div>
                 <div id="relations-container"></div>
+                <div class="col-12 col-lg-6 p-2">
+                    <div class="col-12 p-2">
+                        حدد نوع الربط مع الواجهات
+                    </div>
+                    <div class="col-4 pt-3">
+                        <select class="form-control select1-select" name="type_route" >
 
-                <div class="col-12 p-3">
-                    <div class="col-12">الفانكشنات المتاحة</div>
+                                <option value="web">blade</option>
+                                <option value="api">api</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 p-3 row">
+                    <div class="col-12 p-2">الفانكشنات المتاحة</div>
                     @foreach ($functions as $key => $function)
-                        <div class="form-check">
+                        <div class="form-check col-3">
                             <input class="form-check-input" type="checkbox" name="functions[]" value="{{ $key }}" id="{{ $key }}">
                             <label class="form-check-label" for="{{ $key }}">
                                 {{ $function }}

@@ -4,9 +4,9 @@ namespace App\Functions;
 
 use Illuminate\Http\Request;
 
-trait StoreFunction
+trait IndexFunction
 {
-    public function store(Request $request)
+    public function index()
     {
         // function body here
     }

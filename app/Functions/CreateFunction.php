@@ -4,9 +4,9 @@ namespace App\Functions;
 
 use Illuminate\Http\Request;
 
-trait StoreFunction
+trait CreateFunction
 {
-    public function store(Request $request)
+    public function create()
     {
         // function body here
     }
