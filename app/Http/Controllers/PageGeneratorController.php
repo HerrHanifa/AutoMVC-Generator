@@ -68,7 +68,7 @@ $this->ModelService->createModel($tableName, $namescolumns);
 
         // Generate Routes
 
-            // RouteHelper::addRoutes($controllerName, $functions, $pathRoute);
+            RouteHelper::addRoutes($controllerName, $functions, $pathRoute);
 
 
         return response()->json(['message' => 'Page created successfully!']);
@@ -94,14 +94,37 @@ $functions = [];
 foreach ($functionFiles as $file) {
     if (preg_match('/Function\.php$/', $file)) {
         $functionName = Str::camel(str_replace('Function.php', '', $file));
-        $functions[$functionName] = $functionName;
+
+        $className = basename($file, '.php');
+        $pathClass = 'App\Functions\\'.$className;
+        $reflectionClass = new ReflectionClass($pathClass);
+        $method = $reflectionClass->getMethod($functionName);
+        $parameters = $method->getParameters();
+        $requestParameter = false;
+        foreach ($parameters as $parameter) {
+            if ($parameter->getType() && $parameter->getType()->getName() === 'Illuminate\Http\Request') {
+                $requestParameter = true;
+                break;
+            }
+        }
+        $functions[$functionName] = $requestParameter ? 'POST' : 'GET';
 
     }
 }
+// dd($functions);
+// $classname = "App\Functions\CreateFunction";
+// $reflectionClass = new ReflectionClass($classname);
+// $method = $reflectionClass->getMethods();
+// $namefunction =basename($reflectionClass->getName(),'Function')
+
+// $method = $reflectionClass->getMethod("create");
+// $param = $method->getParameters();
+// // $method = $reflectionClass->getMethod($reflectionClass->getName());
+// dd($method , $param);
 // $trait = [];
 // foreach (glob("app/Functions/*.php") as $file) {
 //     $className = basename($file, '.php');
-
+//     dd($className);
 //     $reflectionClass = new ReflectionClass($className);
 //     $method = $reflectionClass->getMethod($reflectionClass->getName()); // نحصل على الطريقة الوحيدة في الملف
 

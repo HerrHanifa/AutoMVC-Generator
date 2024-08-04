@@ -36,3 +36,6 @@ Route::get('/contactUs', [ContactUsApiController::class,'index']);
 Route::get('/homePage', [SliderApiController::class,'index']);
 Route::get('/sendMessage', [CommunicateApiController::class,'sendMessage']);
 
+
+Route::post('/Gsddsgdfgs/create', [App\Http\Controllers\GsddsgdfgsController::class, 'create']);
+Route::get('/Gsddsgdfgs/index', [App\Http\Controllers\GsddsgdfgsController::class, 'index']);

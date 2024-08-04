@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait CreateFunction
 {
-    public function create()
+    public function create(Request $request)
     {
         // function body here
     }

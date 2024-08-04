@@ -61,10 +61,10 @@
                 </div>
                 <div class="col-12 p-3 row">
                     <div class="col-12 p-2">الفانكشنات المتاحة</div>
-                    @foreach ($functions as $key => $function)
+                    @foreach ($functions as $function => $method)
                         <div class="form-check col-3">
-                            <input class="form-check-input" type="checkbox" name="functions[]" value="{{ $key }}" id="{{ $key }}">
-                            <label class="form-check-label" for="{{ $key }}">
+                            <input class="form-check-input" type="checkbox" name="functions[{{$function}}]" value="{{$method}}" id="{{ $function }}">
+                            <label class="form-check-label" for="{{ $function }}">
                                 {{ $function }}
                             </label>
                         </div>

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use \App\Functions\POSTFunction;
 use \App\Functions\GETFunction;
 
-use App\Models\Gsddsgdfgs;
+use App\Models\Employmllees;
 
-class GsddsgdfgsController extends Controller
+class EmploymlleesController extends Controller
 {
     
 }
