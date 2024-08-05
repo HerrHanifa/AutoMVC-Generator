@@ -5,7 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class ControllerGeneratorService 
+class ControllerGeneratorService
 {
     public function createController($controllerName, $functions)
     {
@@ -13,13 +13,13 @@ class ControllerGeneratorService
         $traits = '';
 
         // Generate the function files array
-        foreach ($functions as $functionName) {
+        foreach ($functions as $functionName => $methodNAme) {
             $fileName = Str::studly($functionName) . 'Function';
             $functionFiles[$functionName] = $fileName;
         }
         // Extract the model name from the controller name
         $modelName = str_replace('Controller', '', $controllerName);
-
+// dd($functionFiles);
         // Extract traits and methods
         foreach ($functionFiles as $functionName => $fileName) {
             $traits .= "use \\App\\Functions\\{$fileName};\n";
@@ -77,7 +77,7 @@ EOD;
     public function addRoutes($controllerName, $functions, $routeFile = 'web')
     {
         $routeFilePath = base_path("routes/{$routeFile}.php");
-        
+
         if (!File::exists($routeFilePath)) {
             throw new \Exception("The route file {$routeFile}.php does not exist.");
         }
