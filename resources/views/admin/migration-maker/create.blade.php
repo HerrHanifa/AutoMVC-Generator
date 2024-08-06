@@ -59,18 +59,29 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-12 p-3 row">
-                    <div class="col-12 p-2">الفانكشنات المتاحة</div>
-                    @foreach ($functions as $function => $method)
-                        <div class="form-check col-3">
-                            <input class="form-check-input" type="checkbox" name="functions[{{$function}}]" value="{{$method}}" id="{{ $function }}">
-                            <label class="form-check-label" for="{{ $function }}">
-                                {{ $function }}
-                            </label>
-                        </div>
-                    @endforeach
+                <div class="col-12 col-lg-6 p-2">
+                    <div class="col-12">
+                        الفانكشنات المتاحة
+                    </div>
+                    <div class="col-12 pt-3">
+                        <select class="form-control select2-select" name="functions[]" multiple >
+                            @foreach($functions as $function  => $method)
+                                <option value="{{ json_encode(['function' => $function, 'method' => $method]) }}">{{$function}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
+                <div class="col-12 p-3 row">
+                    <div class="col-12 p-2">صفحات العرض</div>
+                @foreach ($views as $view )
+                <div class="form-check col-3">
+                    <input class="form-check-input" type="checkbox" name="views[]" value="{{$view}}" id="{{ $view }}">
+                    <label class="form-check-label" for="{{ $view }}">
+                        {{ $view }}
+                    </label>
+                </div>
+                @endforeach
                 <div class="col-12 p-3">
                     <button type="submit" style="display: none;" class="btn btn-success">إنشاء</button>
                 </div>

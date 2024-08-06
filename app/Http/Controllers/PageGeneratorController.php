@@ -49,7 +49,16 @@ class PageGeneratorController extends Controller
         $columns = $request->input('columns');
      $controllerName= ucfirst(Str::camel($tableName)) . 'Controller';
         // $controllerName = $request->input('controller_name');
-        $functions = $request->input('functions');
+        $selectedFunctions = $request->functions;
+        // dd($selectedFunctions);
+        $functionsData = array_map('json_decode', $selectedFunctions, []);
+        $functions = [];
+        foreach ($functionsData as $functionData) {
+            $functions[$functionData->function] = $functionData->method;
+        }
+
+        $views = $request->input('views');
+        // dd($functions , $views);
         $pathRoute = $request->input('type_route');
 
             // Generate Migration
@@ -66,7 +75,7 @@ $this->ModelService->createModel($tableName, $namescolumns);
         // Generate Controller
         $this->ControllerGeneratorService->createController($controllerName, $functions);
         // Generate Views
-        $this->viewGeneratorService->createViews($tableName, $columns);
+        $this->ViewGeneratorService->createViews($tableName, $columns);
 
 
         // Generate Routes
@@ -114,6 +123,7 @@ foreach ($functionFiles as $file) {
 
             }
         }
-        return view('admin.migration-maker.create' , compact('migrations_name','functions'));
+        $views = ['create' , 'index' , 'show' ,'edit'];
+        return view('admin.migration-maker.create' , compact('migrations_name','functions','views'));
     }
 }
