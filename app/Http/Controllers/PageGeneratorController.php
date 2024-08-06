@@ -66,7 +66,7 @@ $this->ModelService->createModel($tableName, $namescolumns);
         // Generate Controller
         $this->ControllerGeneratorService->createController($controllerName, $functions);
         // Generate Views
-        $this->ViewGeneratorService->createViews($tableName);
+        $this->viewGeneratorService->createViews($tableName, $columns);
 
 
         // Generate Routes

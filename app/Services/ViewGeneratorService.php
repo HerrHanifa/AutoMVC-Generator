@@ -9,11 +9,8 @@ use Illuminate\Support\Facades\Schema;
 
 class ViewGeneratorService
 {
-    public function createViews($tableName)
+    public function createViews($tableName, $fields)
     {
-        $fields = Schema::getColumnListing($tableName);
-        // $sortedFields = MigrationHelper::sortFields($fields);
-
         // Generate Create View
         $this->createCreateView($tableName, $sortedFields);
 
@@ -64,15 +61,17 @@ class ViewGeneratorService
         $fieldLabel = Str::title(str_replace('_', ' ', $fieldName));
         $value = $isEdit ? "{{ \$item->{$fieldName} }}" : "{{ old('{$fieldName}') }}";
 
-        if (in_array($field['type'], ['text', 'longText', 'mediumText'])) {
+        if (in_array($field['type'], ['longText', 'mediumText'])) {
             return <<<EOD
 <div class="form-group">
     <label for="{$fieldName}">{$fieldLabel}</label>
     <textarea name="{$fieldName}" id="{$fieldName}" class="form-control">{$value}</textarea>
 </div>
 
-EOD;
-        } else {
+EOD;}
+
+
+        else if($field['type'] === 'text') {
             return <<<EOD
 <div class="form-group">
     <label for="{$fieldName}">{$fieldLabel}</label>
@@ -81,6 +80,25 @@ EOD;
 
 EOD;
         }
+
+        else if($field['type'] === 'enum') {
+            $options = '';
+            foreach ($enumOptions as $option) {
+                $selected = $isEdit ? "{{ \$item->{$fieldName} === '$option' ? 'selected' : '' }}" : "{{ old('$fieldName') === '$option' ? 'selected' : '' }}";
+                $options .= "<option value=\"$option\" $selected>$option</option>";
+            }
+
+            return <<<EOD
+        <div class="form-group">
+        <label for="{$fieldName}">{$fieldLabel}</label>
+        <select name="{$fieldName}" id="{$fieldName}" class="form-control">
+            {$options}
+        </select>
+        </div>
+
+        EOD;
+
+                }
     }
 
     private function generateCreateViewTemplate($formFields, $tableName)
