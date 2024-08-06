@@ -8,7 +8,7 @@ use App\Helpers\MigrationHelper;
 
 class ViewGeneratorService
 {
-    public function createViews($tableName, $fields)
+    public function createViews($tableName, $fields,$requirdViews)
     {
         // Generate Create View
         $this->createCreateView($tableName, $sortedFields);
@@ -70,7 +70,7 @@ class ViewGeneratorService
 EOD;}
 
 
-        else if($field['type'] === 'text') {
+         if($field['type'] === 'text' && $field['input']=='text') {
             return <<<EOD
 <div class="form-group">
     <label for="{$fieldName}">{$fieldLabel}</label>
@@ -79,7 +79,22 @@ EOD;}
 
 EOD;
         }
-
+        else if ($field['type'] ==='text' && $field['input']=='file') {
+           
+            return <<<EOD
+    <div class="form-group">
+        <label for="{$fieldName}">{$fieldLabel}</label>
+        <div class="col-12 p-2">
+            <div class="col-12">{$fieldLabel}</div>
+            <div class="col-12 pt-3">
+                <input type="file" name="{$fieldName}_file" class="form-control" accept="image/*">
+            </div>
+            <div class="col-12 pt-3"></div>
+        </div>
+    </div>
+    
+    EOD;
+        }
         else if($field['type'] === 'enum') {
             $options = '';
             foreach ($enumOptions as $option) {
