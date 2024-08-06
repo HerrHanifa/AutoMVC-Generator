@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Schema;
 
 class ViewGeneratorService
 {
-    public function createViews($tableName, $fields,$requirdViews)
+    public function createViews($tableName, $fields, $requirdViews)
     {
         // Generate Create View
-        $this->createCreateView($tableName, $sortedFields);
+        $this->createCreateView($tableName,$fields);
 
         // Generate Edit View
         // $this->createEditView($tableName, $sortedFields);
@@ -26,9 +26,18 @@ class ViewGeneratorService
     private function createCreateView($tableName, $fields)
     {
         $viewPath = resource_path("views/{$tableName}/create.blade.php");
+        $this->ensureDirectoryExists($viewPath);
+
         $formFields = $this->generateFormFields($fields);
         $viewTemplate = $this->generateCreateViewTemplate($formFields, $tableName);
         File::put($viewPath, $viewTemplate);
+    }
+    private function ensureDirectoryExists($filePath)
+    {
+        $directory = dirname($filePath);
+        if (!File::exists($directory)) {
+            File::makeDirectory($directory, 0755, true);
+        }
     }
 
     private function createEditView($tableName, $fields)
@@ -71,7 +80,7 @@ class ViewGeneratorService
 EOD;}
 
 
-         if($field['type'] === 'text' && $field['input']=='text') {
+         if($field['type'] === 'text') {
             return <<<EOD
 <div class="form-group">
     <label for="{$fieldName}">{$fieldLabel}</label>
@@ -80,7 +89,7 @@ EOD;}
 
 EOD;
         }
-        else if ($field['type'] ==='text' && $field['input']=='file') {
+        else if ($field['type'] ==='file' ) {
            
             return <<<EOD
     <div class="form-group">
