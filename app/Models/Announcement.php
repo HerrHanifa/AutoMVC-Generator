@@ -20,7 +20,7 @@ class Announcement extends Model implements HasMedia
         if($this->image==null)
             return env('DEFAULT_IMAGE');
         else
-            return env("STORAGE_URL").'/'.\MainHelper::get_conversion($this->image,$type);
+            return env("STORAGE_URL").'/'.\App\Helpers\MainHelper::get_conversion($this->image,$type);
     }
 
     public function getStartDateAttribute($value)

@@ -335,11 +335,3 @@ Route::get('/التواصل', [indexController::class,'contuct'])->name('contuct
 ############################################# End front end ######################################################
 
 
-
-Route::post('/Employmllees/create', [App\Http\Controllers\EmploymlleesController::class, 'create']);
-Route::get('/Employmllees/index', [App\Http\Controllers\EmploymlleesController::class, 'index']);
-
-Route::post('/Employeesee/create', [App\Http\Controllers\EmployeeseeController::class, 'create']);
-Route::get('/Employeesee/index', [App\Http\Controllers\EmployeeseeController::class, 'index']);
-Route::post('/Loibhl/create', [App\Http\Controllers\LoibhlController::class, 'create']);
-Route::get('/Loibhl/index', [App\Http\Controllers\LoibhlController::class, 'index']);

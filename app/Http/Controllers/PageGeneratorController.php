@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ModelService;
 use App\Services\ControllerGeneratorService;
 use App\Services\MigrationService;
+use App\Services\ViewGeneratorService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Helpers\RouteHelper;
@@ -18,17 +19,19 @@ class PageGeneratorController extends Controller
     protected $ModelService;
     protected $ControllerGeneratorService;
     protected $MigrationService;
-
+    protected $ViewGeneratorService;
 
     public function __construct(
         ModelService $ModelService,
         ControllerGeneratorService $ControllerGeneratorService,
         MigrationService $MigrationService,
+        ViewGeneratorService $ViewGeneratorService
 
     ) {
         $this->ModelService = $ModelService;
         $this->ControllerGeneratorService = $ControllerGeneratorService;
         $this->MigrationService = $MigrationService;
+        $this->ViewGeneratorService = $ViewGeneratorService;
 
     }
 
@@ -63,7 +66,7 @@ $this->ModelService->createModel($tableName, $namescolumns);
         // Generate Controller
         $this->ControllerGeneratorService->createController($controllerName, $functions);
         // Generate Views
-        // $this->viewGeneratorService->createViews($tableName);
+        $this->ViewGeneratorService->createViews($tableName);
 
 
         // Generate Routes
@@ -109,42 +112,8 @@ foreach ($functionFiles as $file) {
         }
         $functions[$functionName] = $requestParameter ? 'POST' : 'GET';
 
-    }
-}
-// dd($functions);
-// $classname = "App\Functions\CreateFunction";
-// $reflectionClass = new ReflectionClass($classname);
-// $method = $reflectionClass->getMethods();
-// $namefunction =basename($reflectionClass->getName(),'Function')
-
-// $method = $reflectionClass->getMethod("create");
-// $param = $method->getParameters();
-// // $method = $reflectionClass->getMethod($reflectionClass->getName());
-// dd($method , $param);
-// $trait = [];
-// foreach (glob("app/Functions/*.php") as $file) {
-//     $className = basename($file, '.php');
-//     dd($className);
-//     $reflectionClass = new ReflectionClass($className);
-//     $method = $reflectionClass->getMethod($reflectionClass->getName()); // نحصل على الطريقة الوحيدة في الملف
-
-//     $parameters = $method->getParameters();
-//     $requestParameter = false;
-//     foreach ($parameters as $parameter) {
-//         if ($parameter->getType() && $parameter->getType()->getName() === 'Illuminate\Http\Request') {
-//             $requestParameter = true;
-//             break;
-//         }
-//     }
-
-//     $trait[$method->getName()] = [
-//         'method' => $requestParameter ? 'POST' : 'GET',
-//     ];
-// }
-
-// dd($trait);
-
-
+            }
+        }
         return view('admin.migration-maker.create' , compact('migrations_name','functions'));
     }
 }

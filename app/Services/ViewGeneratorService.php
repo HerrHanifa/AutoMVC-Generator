@@ -5,22 +5,23 @@ namespace App\Services;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Helpers\MigrationHelper;
+use Illuminate\Support\Facades\Schema;
 
 class ViewGeneratorService
 {
     public function createViews($tableName)
     {
-        $fields = MigrationHelper::getFieldsFromMigration($tableName);
-        $sortedFields = MigrationHelper::sortFields($fields);
+        $fields = Schema::getColumnListing($tableName);
+        // $sortedFields = MigrationHelper::sortFields($fields);
 
         // Generate Create View
         $this->createCreateView($tableName, $sortedFields);
 
         // Generate Edit View
-        $this->createEditView($tableName, $sortedFields);
+        // $this->createEditView($tableName, $sortedFields);
 
-        // Generate Show View
-        $this->createShowView($tableName, $sortedFields);
+        // // Generate Show View
+        // $this->createShowView($tableName, $sortedFields);
 
         return response()->json(['message' => 'Views created successfully']);
     }
@@ -56,7 +57,7 @@ class ViewGeneratorService
         }
         return $formFields;
     }
-
+ //Field Template
     private function generateFieldTemplate($field, $isEdit = false)
     {
         $fieldName = $field['name'];
@@ -126,10 +127,10 @@ EOD;
             $fieldName = $field['name'];
             $fieldLabel = Str::title(str_replace('_', ' ', $fieldName));
             $viewFields .= <<<EOD
-<div class="form-group">
-    <label for="{$fieldName}">{$fieldLabel}</label>
-    <p>{{ \$item->{$fieldName} }}</p>
-</div>
+        <div class="form-group">
+            <label for="{$fieldName}">{$fieldLabel}</label>
+            <p>{{ \$item->{$fieldName} }}</p>
+        </div>
 
 EOD;
         }
