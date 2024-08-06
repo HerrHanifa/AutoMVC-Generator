@@ -37,6 +37,7 @@ class PageGeneratorController extends Controller
 
     public function createPage(Request $request)
     {
+
         // Validate the request
         // $request->validate([
         //     'table_name' => 'required|string|max:255',
@@ -49,40 +50,31 @@ class PageGeneratorController extends Controller
         $columns = $request->input('columns');
         $controllerName= ucfirst(Str::camel($tableName)) . 'Controller';
         // $controllerName = $request->input('controller_name');
-        $selectedFunctions = $request->functions;
+        // $selectedFunctions = $request->functions;
         // dd($selectedFunctions);
-        $functionsData = array_map('json_decode', $selectedFunctions, []);
-        $functions = [];
-        foreach ($functionsData as $functionData) {
-            $functions[$functionData->function] = $functionData->method;
-        }
+        // $functionsData = array_map('json_decode', $selectedFunctions, []);
+        // $functions = [];
+        // foreach ($functionsData as $functionData) {
+        //     $functions[$functionData->function] = $functionData->method;
+        // }
 
         $requirdViews = $request->input('views');
-        //dd($functions , $requirdViews);
+        // dd($functions , $views);
         $pathRoute = $request->input('type_route');
-
-            // Generate Migration
-        //$this->MigrationService->generateMigrationContent($tableName, $columns);
-
-        //استخراج أسماء الأعمدة من مصفوفة الأعمدة
-            $namescolumns = array_column($columns, 'name');
-
-//استدعاء الدالة مع أسماء الأعمدة فقط
-//$this->ModelService->createModel($tableName, $namescolumns);
-
-
-
+        // Generate Migration
+        // $this->MigrationService->generateMigrationContent($tableName, $columns);
+        // استخراج أسماء الأعمدة من مصفوفة الأعمدة
+        $namescolumns = array_column($columns, 'name');
+        // $vds= dd($tableName,$columns,$requirdViews);
+        // return  $vds;
+        // استدعاء الدالة مع أسماء الأعمدة فقط
+        // $this->ModelService->createModel($tableName, $namescolumns);
         // Generate Controller
         // $this->ControllerGeneratorService->createController($controllerName, $functions);
         // Generate Views
         $this->ViewGeneratorService->createViews($tableName, $columns, $requirdViews);
-
-
         // Generate Routes
-
-            RouteHelper::addRoutes($controllerName, $functions, $pathRoute);
-
-
+        // RouteHelper::addRoutes($controllerName, $functions, $pathRoute);
         return response()->json(['message' => 'Page created successfully!']);
     }
 
