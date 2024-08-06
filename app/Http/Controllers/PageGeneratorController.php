@@ -47,7 +47,7 @@ class PageGeneratorController extends Controller
 
         $tableName = $request->input('table_name');
         $columns = $request->input('columns');
-     $controllerName= ucfirst(Str::camel($tableName)) . 'Controller';
+        $controllerName= ucfirst(Str::camel($tableName)) . 'Controller';
         // $controllerName = $request->input('controller_name');
         $selectedFunctions = $request->functions;
         // dd($selectedFunctions);
@@ -60,29 +60,18 @@ class PageGeneratorController extends Controller
         $views = $request->input('views');
         // dd($functions , $views);
         $pathRoute = $request->input('type_route');
-
-            // Generate Migration
+        // Generate Migration
         $this->MigrationService->generateMigrationContent($tableName, $columns);
-
         // استخراج أسماء الأعمدة من مصفوفة الأعمدة
-$namescolumns = array_column($columns, 'name');
-
-// استدعاء الدالة مع أسماء الأعمدة فقط
-$this->ModelService->createModel($tableName, $namescolumns);
-
-
-
+        $namescolumns = array_column($columns, 'name');
+        // استدعاء الدالة مع أسماء الأعمدة فقط
+        $this->ModelService->createModel($tableName, $namescolumns);
         // Generate Controller
         $this->ControllerGeneratorService->createController($controllerName, $functions);
         // Generate Views
         $this->viewGeneratorService->createViews($tableName, $columns, $requirdViews);
-
-
         // Generate Routes
-
-            RouteHelper::addRoutes($controllerName, $functions, $pathRoute);
-
-
+        RouteHelper::addRoutes($controllerName, $functions, $pathRoute);
         return response()->json(['message' => 'Page created successfully!']);
     }
 
