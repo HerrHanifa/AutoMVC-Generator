@@ -322,18 +322,12 @@
                                 </div>
                             </div>
                             <div class="col-12 px-0" >
-                                <ul class="sub-item font-1" style="list-style:none;">
-                                    {{-- @can('categories-read')
-                                    <li><a href="{{route('admin.categories.index')}}" style="font-size: 16px;"><span class="fal fa-tag px-2" style="width: 28px;font-size: 15px;"></span> الأقسام</a></li>
-                                    @endcan --}}
+                                <ul class="sub-item font-1" style="list-style:none;"><li><a href="{{ route('admin.test1.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test1</a></li>
 
-
-                                    {{-- <li><a href="{{route('admin.cards.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>البطاقات التعريفية</a></li> --}}
 
                                     <li><a href="{{route('admin.articles.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>المقالات</a></li>
                                     <li><a href="{{route('admin.clients.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span> فريق العمل</a></li>
                                     <li><a href="{{route('admin.slider.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>الواجهة الرئيسية </a></li>
-
                                     <li><a href="{{route('admin.contact_us.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span> التواصل</a></li>
                                     <li><a href="{{route('admin.aboutus.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>نبذة عنا</a></li>
 

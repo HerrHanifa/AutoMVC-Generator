@@ -334,4 +334,4 @@ Route::get('/التواصل', [indexController::class,'contuct'])->name('contuct
 
 ############################################# End front end ######################################################
 
-
+Route::get('/test1/index', [App\Http\Controllers\Test1Controller::class, 'index'])->name('admin.test1.index');
