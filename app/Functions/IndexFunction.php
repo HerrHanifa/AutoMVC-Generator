@@ -8,7 +8,9 @@ trait IndexFunction
 {
     public function index()
     {
-        // function body here
-    }
+     
+        $modalNames= ModalName::get();
+        return view('modalName.index',compact('modalNames'));
 
+}
 }

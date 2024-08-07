@@ -8,7 +8,7 @@ class RouteHelper
 {
     public static function addRoutes($controllerName, $functions, $routeFile = 'web')
     {
-        $urlPath = str_replace('Controller','',$controllerName);
+        $urlPath = strtolower(str_replace('Controller','',$controllerName));
         $routeFilePath = base_path("routes/{$routeFile}.php");
         if (!File::exists($routeFilePath)) {
             throw new \Exception("The route file {$routeFile}.php does not exist.");
@@ -20,9 +20,11 @@ class RouteHelper
         foreach ($functions as $function => $method) {
             $routeName = $function;
             $routeMethod = strtolower($method);
+
+
             $newRoutes .= <<<EOD
 
-Route::{$routeMethod}('/{$urlPath}/{$routeName}', [App\Http\Controllers\\{$controllerName}::class, '{$routeName}']);
+Route::{$routeMethod}('/{$urlPath}/{$routeName}', [App\Http\Controllers\\{$controllerName}::class, '{$routeName}'])->name('admin.{$urlPath}.{$routeName}');
 EOD;
         }
 

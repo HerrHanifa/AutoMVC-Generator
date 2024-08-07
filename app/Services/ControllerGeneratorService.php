@@ -19,6 +19,9 @@ class ControllerGeneratorService
         }
         // Extract the model name from the controller name
         $modelName = str_replace('Controller', '', $controllerName);
+        $modelNamePlural = Str::plural($modelName);
+        $modelNameSmall = strtolower($modelName);
+        // $modelNames=Str::plural($modelName);
 // dd($functionFiles);
         // Extract traits and methods
         foreach ($functionFiles as $functionName => $fileName) {
@@ -30,10 +33,14 @@ class ControllerGeneratorService
                 $fileContent = file_get_contents($traitPath);
 
                 // Extract method bodies from the trait file content
-                preg_match_all('/public function [a-zA-Z0-9_]+\([^\)]*\)\s*\{[^}]*\}/', $fileContent, $matches);
+                preg_match_all('/(?:public|protected|private)\s+function\s+[a-zA-Z0-9_]+\s*\([^)]*\)\s*\{(?:[^{}]*|\{(?:[^{}]*|\{[^{}]*\})*\})*\}/s', $fileContent, $matches);
                 foreach ($matches[0] as $method) {
-                    $methodWithModel = str_replace('{$modelName}', $modelName, $method);
-                    $methods .= $methodWithModel . "\n";
+                    $methodWithModel = str_replace('ModalName', $modelName, $method);
+                    $methodWithModel = str_replace('modalName', $modelNameSmall, $methodWithModel);
+                    $methodWithModel = str_replace('modalNames', $modelNamePlural, $methodWithModel);
+    
+                    $methods .=  $methodWithModel . "\n";
+
 
                 }
             }
@@ -74,28 +81,5 @@ class {$controllerName} extends Controller
 EOD;
     }
 
-    public function addRoutes($controllerName, $functions, $routeFile = 'web')
-    {
-        $routeFilePath = base_path("routes/{$routeFile}.php");
 
-        if (!File::exists($routeFilePath)) {
-            throw new \Exception("The route file {$routeFile}.php does not exist.");
-        }
-
-        $routeContent = File::get($routeFilePath);
-
-        $newRoutes = '';
-        foreach ($functions as $function) {
-            $routeName = $function['name'];
-            $routeMethod = strtolower($function['method']);
-            $newRoutes .= <<<EOD
-
-Route::{$routeMethod}('/{$routeName}', [App\Http\Controllers\\{$controllerName}::class, '{$routeName}']);
-EOD;
-        }
-
-        $routeContent .= $newRoutes;
-
-        File::put($routeFilePath, $routeContent);
-    }
 }

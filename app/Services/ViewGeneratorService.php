@@ -19,6 +19,9 @@ class ViewGeneratorService
 
         // // Generate Show View
         $this->createShowView($tableName,$fields);
+        // Update navigation
+        $this->updateNavigation($tableName);
+
 
         return response()->json(['message' => 'Views created successfully']);
     }
@@ -220,5 +223,23 @@ EOD;
     @endsection
     EOD;
     }
+
+    private function updateNavigation($tableName)
+{
+    $navPath = resource_path("views/layouts/admin.blade.php");
+    $link = <<<EOD
+<li><a href="{{ route('{$tableName}.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>{$tableName}</a></li>
+
+EOD;
+
+    $currentNav = File::get($navPath);
+    $insertPosition = strpos($currentNav, '<ul class="sub-item font-1"');
+    $insertPosition = strpos($currentNav, '>', $insertPosition) + 1;
+    
+    $navWithNewLink = substr($currentNav, 0, $insertPosition) . $link . substr($currentNav, $insertPosition);
+
+    File::put($navPath, $navWithNewLink);
+}
+
     
 }

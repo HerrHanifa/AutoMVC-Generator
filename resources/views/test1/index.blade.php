@@ -30,8 +30,8 @@
             <td>{{ $item->Name }}</td>
         </tr>
         <tr>
-            <td>Dicreibe</td>
-            <td>{{ $item->dicreibe }}</td>
+            <td>Discripe</td>
+            <td>{{ $item->discripe }}</td>
         </tr>
 
                     </tbody>
