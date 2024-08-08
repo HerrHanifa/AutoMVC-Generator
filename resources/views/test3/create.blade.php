@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="col-12 p-3">
-    <form action="{{ route('test1s.store') }}" method="POST">
+    <form action="{{ route('test3s.store') }}" method="POST">
         @csrf
         <div class="form-group">
     <label for="Name">Name</label>

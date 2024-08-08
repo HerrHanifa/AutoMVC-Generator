@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="col-12 p-3">
-    <form action="{{ route('test1s.update', $item->id) }}" method="POST">
+    <form action="{{ route('test3s.update', $item->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">

@@ -67,7 +67,7 @@ class ViewGeneratorService
     //Index
     private function createIndexView($tableName, $fields)
     {
-        $viewPath = resource_path("views/{$tableName}/show.blade.php");
+        $viewPath = resource_path("views/{$tableName}/index.blade.php");
         $this->ensureDirectoryExists($viewPath);
         $viewTemplate = $this->generateIndexViewTemplate($fields, $tableName);
         File::put($viewPath, $viewTemplate);
