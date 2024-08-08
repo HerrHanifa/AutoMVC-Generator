@@ -24,7 +24,7 @@ class RouteHelper
 
             $newRoutes .= <<<EOD
 
-Route::{$routeMethod}('/{$urlPath}/{$routeName}', [App\Http\Controllers\\{$controllerName}::class, '{$routeName}'])->name('admin.{$urlPath}.{$routeName}');
+Route::{$routeMethod}('/{$urlPath}/{$routeName}', [App\Http\Controllers\\{$controllerName}::class, '{$routeName}'])->name('{$urlPath}.{$routeName}');
 EOD;
         }
 

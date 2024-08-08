@@ -15,7 +15,7 @@ class Test1Controller extends Controller
 
         // $test1s= Test1::get();
         $test1s = DB::select('select * from test1');
-        dd($test1s);
+        // dd($test1s);
         return view('test1.index',compact('test1s'));
 
 }

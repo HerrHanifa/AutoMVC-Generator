@@ -202,11 +202,12 @@ EOD;
             $fieldName = $field['name'];
             $fieldLabel = Str::title(str_replace('_', ' ', $fieldName));
             $viewFields = <<<EOD
+            @foreach(\$tableName as \$item)
             <tr>
                 <td>{$fieldLabel}</td>
-                <td>{{ \$tableName->{$fieldName} }}</td>
+                <td>{{ \$item->{$fieldName} }}</td>
             </tr>
-
+            @endforeach
     EOD;
         }
 
