@@ -18,7 +18,7 @@ class ViewGeneratorService
         $this->createEditView($tableName,$fields);
 
         // // Generate Show View
-        $this->createShowView($tableName,$fields);
+        $this->createIndexView($tableName,$fields);
         // Update navigation
         $this->updateNavigation($tableName);
 
@@ -26,6 +26,9 @@ class ViewGeneratorService
         return response()->json(['message' => 'Views created successfully']);
     }
 
+
+
+    //Create
     private function createCreateView($tableName, $fields)
     {
         $viewPath = resource_path("views/{$tableName}/create.blade.php");
@@ -35,6 +38,9 @@ class ViewGeneratorService
         $viewTemplate = $this->generateCreateViewTemplate($formFields, $tableName);
         File::put($viewPath, $viewTemplate);
     }
+
+
+    //ensure
     private function ensureDirectoryExists($filePath)
     {
         $directory = dirname($filePath);
@@ -43,6 +49,9 @@ class ViewGeneratorService
         }
     }
 
+
+
+    //edit
     private function createEditView($tableName, $fields)
     {
         $viewPath = resource_path("views/{$tableName}/edit.blade.php");
@@ -53,14 +62,20 @@ class ViewGeneratorService
         File::put($viewPath, $viewTemplate);
     }
 
-    private function createShowView($tableName, $fields)
+
+
+    //Index
+    private function createIndexView($tableName, $fields)
     {
         $viewPath = resource_path("views/{$tableName}/show.blade.php");
         $this->ensureDirectoryExists($viewPath);
-        $viewTemplate = $this->generateShowViewTemplate($fields, $tableName);
+        $viewTemplate = $this->generateIndexViewTemplate($fields, $tableName);
         File::put($viewPath, $viewTemplate);
     }
 
+
+
+    //form
     private function generateFormFields($fields, $isEdit = false)
     {
         $formFields = '';
@@ -69,6 +84,9 @@ class ViewGeneratorService
         }
         return $formFields;
     }
+
+
+
  //Field Template
     private function generateFieldTemplate($field, $isEdit = false)
     {
@@ -96,7 +114,7 @@ EOD;}
 EOD;
         }
         else if ($field['type'] ==='file' ) {
-           
+
             return <<<EOD
     <div class="form-group">
         <label for="{$fieldName}">{$fieldLabel}</label>
@@ -108,7 +126,7 @@ EOD;
             <div class="col-12 pt-3"></div>
         </div>
     </div>
-    
+
     EOD;
         }
         else if($field['type'] === 'enum') {
@@ -131,6 +149,9 @@ EOD;
                 }
     }
 
+
+
+    //create Template
     private function generateCreateViewTemplate($formFields, $tableName)
     {
         $routeName = Str::plural($tableName) . '.store';
@@ -149,6 +170,9 @@ EOD;
 EOD;
     }
 
+
+
+    //Edite template
     private function generateEditViewTemplate($formFields, $tableName)
     {
         $routeName = Str::plural($tableName) . '.update';
@@ -168,24 +192,27 @@ EOD;
 EOD;
     }
 
-    private function generateShowViewTemplate($fields, $tableName)
+
+
+    //Index
+    private function generateIndexViewTemplate($fields, $tableName)
     {
         $viewFields = '';
         foreach ($fields as $field) {
             $fieldName = $field['name'];
             $fieldLabel = Str::title(str_replace('_', ' ', $fieldName));
-            $viewFields .= <<<EOD
+            $viewFields = <<<EOD
             <tr>
                 <td>{$fieldLabel}</td>
-                <td>{{ \$item->{$fieldName} }}</td>
+                <td>{{ \$tableName->{$fieldName} }}</td>
             </tr>
-    
+
     EOD;
         }
-    
+
         return <<<EOD
     @extends('layouts.admin')
-    
+
     @section('content')
     <div class="col-12 p-3">
         <div class="col-12 col-lg-12 p-0 main-box">
@@ -199,7 +226,7 @@ EOD;
                 </div>
                 <div class="col-12 divider" style="min-height: 2px;"></div>
             </div>
-    
+
             <div class="col-12 p-3" style="overflow:auto">
                 <div class="col-12 p-0" style="min-width:1100px;">
                     <table class="table table-bordered  table-hover">
@@ -224,6 +251,9 @@ EOD;
     EOD;
     }
 
+
+
+    // navegation
     private function updateNavigation($tableName)
 {
     $navPath = resource_path("views/layouts/admin.blade.php");
@@ -235,11 +265,11 @@ EOD;
     $currentNav = File::get($navPath);
     $insertPosition = strpos($currentNav, '<ul class="sub-item font-1"');
     $insertPosition = strpos($currentNav, '>', $insertPosition) + 1;
-    
+
     $navWithNewLink = substr($currentNav, 0, $insertPosition) . $link . substr($currentNav, $insertPosition);
 
     File::put($navPath, $navWithNewLink);
 }
 
-    
+
 }

@@ -6,7 +6,7 @@
         <div class="col-12 px-0">
             <div class="col-12 p-0 row">
                 <div class="col-12 col-lg-4 py-3 px-3">
-                    <span class="fas fa-articles"></span> <th style="width:150px;">{{ $name }}</th>
+                    <span class="fas fa-articles"></span> <th style="width:150px;"></th>
                 </div>
                 <div class="col-12 col-lg-4 p-0">
                 </div>
@@ -27,11 +27,11 @@
                     <tbody>
                                 <tr>
             <td>Name</td>
-            <td>{{ $item->Name }}</td>
+            <td>{{ $test1s->Name }}</td>
         </tr>
         <tr>
             <td>Discripe</td>
-            <td>{{ $item->discripe }}</td>
+            <td>{{ $test1s->discripe }}</td>
         </tr>
 
                     </tbody>
