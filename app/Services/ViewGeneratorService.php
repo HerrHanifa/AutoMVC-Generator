@@ -266,6 +266,7 @@ EOD;
                         <tbody>
                         @foreach(\$$items as \$$tableName)
                             <tr>
+                                <td> </td>
                                 {$viewFields}
                             </tr>
                          @endforeach
