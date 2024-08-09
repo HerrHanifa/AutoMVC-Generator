@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatelkemgnfsldTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatelkemgnfsldTable extends Migration
      */
     public function up()
     {
-        Schema::create('lkemgnfsld', function (Blueprint $table) {
+        Schema::create('finish2test', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-$table->string('fdg');
+$table->string('last');
+$table->string('description');
 
             
             $table->timestamps();
@@ -30,6 +31,6 @@ $table->string('fdg');
      */
     public function down()
     {
-        Schema::dropIfExists('lkemgnfsld');
+        Schema::dropIfExists('finish2test');
     }
-}
+};

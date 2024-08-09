@@ -11,14 +11,36 @@ class ViewGeneratorService
 {
     public function createViews($tableName, $fields, $requirdViews)
     {
-        // Generate Create View
-        $this->createCreateView($tableName,$fields);
 
-        // Generate Edit View
-        $this->createEditView($tableName,$fields);
+        // dd($requirdViews);
+        if (empty($requirdViews)) {
+            return;
+        }
+        // dd($tableName);
 
-        // // Generate Show View
-        $this->createIndexView($tableName,$fields);
+        // جولة على المصفوفة واستدعاء الخدمات المناظرة
+        foreach ($requirdViews as $view) {
+
+            switch ($view) {
+                case 'index':
+                    $this->createIndexView($tableName, $fields);
+                    break;
+                case 'create':
+                    $this->createCreateView($tableName, $fields);
+                    break;
+                case 'edit':
+                    $this->createEditView($tableName, $fields);
+                    break;
+                default:
+
+                return redirect()->json('error', ' the value sending doesnt exist');
+                    // التعامل مع الحالات غير المعرفة
+                    // يمكنك هنا إظهار رسالة خطأ أو تسجيلها
+                    break;
+            }
+        }
+
+
         // Update navigation
         $this->updateNavigation($tableName);
 
@@ -194,23 +216,27 @@ EOD;
 
 
 
-    //Index
+    //Index Template
     private function generateIndexViewTemplate($fields, $tableName)
     {
+        // dd($fields , $tableName);
+        $items =  Str::plural($tableName);
         $viewFields = '';
+        $fieldLabel = [];
+        $viewLabel = '';
         foreach ($fields as $field) {
             $fieldName = $field['name'];
-            $fieldLabel = Str::title(str_replace('_', ' ', $fieldName));
-            $viewFields = <<<EOD
-            @foreach(\$tableName as \$item)
-            <tr>
-                <td>{$fieldLabel}</td>
-                <td>{{ \$item->{$fieldName} }}</td>
-            </tr>
-            @endforeach
-    EOD;
-        }
+            $fieldLabel = Str::title(str_replace('_', ' ',$fieldName ));
+            $viewFields .= <<<EOD
+                    <td>{{ \$$tableName->{$fieldName} }}</td>
 
+EOD;
+            $viewLabel .= <<<EOD
+                    <th>{$fieldLabel}</th>
+
+EOD;
+        }
+        // dd($fieldLabel , $fieldName2);
         return <<<EOD
     @extends('layouts.admin')
 
@@ -220,7 +246,7 @@ EOD;
             <div class="col-12 px-0">
                 <div class="col-12 p-0 row">
                     <div class="col-12 col-lg-4 py-3 px-3">
-                        <span class="fas fa-articles"></span> <th style="width:150px;">{{ \$name }}</th>
+                        <span class="fas fa-articles"></span> <th style="width:150px;">{{\$$items}}</th>
                     </div>
                     <div class="col-12 col-lg-4 p-0">
                     </div>
@@ -233,13 +259,16 @@ EOD;
                     <table class="table table-bordered  table-hover">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Field</th>
-                                <th>Value</th>
+                            <th>#</th>
+                                {$viewLabel}
                             </tr>
                         </thead>
                         <tbody>
-                            {$viewFields}
+                        @foreach(\$$items as \$$tableName)
+                            <tr>
+                                {$viewFields}
+                            </tr>
+                         @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -259,7 +288,9 @@ EOD;
 {
     $navPath = resource_path("views/layouts/admin.blade.php");
     $link = <<<EOD
-<li><a href="{{ route('{$tableName}.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>{$tableName}</a></li>
+
+                    <li><a href="{{ route('{$tableName}.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>{$tableName}</a></li>
+
 
 EOD;
 

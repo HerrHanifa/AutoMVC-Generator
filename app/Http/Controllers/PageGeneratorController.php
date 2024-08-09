@@ -48,10 +48,11 @@ class PageGeneratorController extends Controller
 
         $tableName = $request->input('table_name');
         $columns = $request->input('columns');
+        // dd($columns);
         $controllerName= ucfirst(Str::camel($tableName)) . 'Controller';
         // $controllerName = $request->input('controller_name');
         $selectedFunctions = $request->functions;
-    
+
         $functionsData = array_map('json_decode', $selectedFunctions, []);
         $functions = [];
         foreach ($functionsData as $functionData) {
@@ -65,7 +66,7 @@ class PageGeneratorController extends Controller
         $this->MigrationService->generateMigrationContent($tableName, $columns);
         // استخراج أسماء الأعمدة من مصفوفة الأعمدة
         $namescolumns = array_column($columns, 'name');
-       
+
         // استدعاء الدالة مع أسماء الأعمدة فقط
         $this->ModelService->createModel($tableName, $namescolumns);
         // Generate Controller

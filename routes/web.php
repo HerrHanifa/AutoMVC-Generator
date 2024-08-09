@@ -334,8 +334,6 @@ Route::get('/التواصل', [indexController::class,'contuct'])->name('contuct
 
 ############################################# End front end ######################################################
 
-Route::get('/test1/index', [App\Http\Controllers\Test1Controller::class, 'index'])->name('test1.index');
-Route::get('/lkemgnfsld/index', [App\Http\Controllers\LkemgnfsldController::class, 'index'])->name('lkemgnfsld.index');
 
-Route::get('/test1/index', [App\Http\Controllers\Test1Controller::class, 'index'])->name('test1.index');
-Route::get('/lkemgnfsld/index', [App\Http\Controllers\LkemgnfsldController::class, 'index'])->name('lkemgnfsld.index');
+Route::get('/finishtest/index', [App\Http\Controllers\FinishtestController::class, 'index'])->name('finishtest.index');
+Route::get('/finish2test/index', [App\Http\Controllers\Finish2testController::class, 'index'])->name('finish2test.index');

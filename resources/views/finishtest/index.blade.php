@@ -6,7 +6,7 @@
         <div class="col-12 px-0">
             <div class="col-12 p-0 row">
                 <div class="col-12 col-lg-4 py-3 px-3">
-                    <span class="fas fa-articles"></span> <th style="width:150px;">{{ $name }}</th>
+                    <span class="fas fa-articles"></span> <th style="width:150px;">{{$finishtests }}</th>
                 </div>
                 <div class="col-12 col-lg-4 p-0">
                 </div>
@@ -19,18 +19,22 @@
                 <table class="table table-bordered  table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Field</th>
-                            <th>Value</th>
+                        <th>#</th>
+                                                <th>Name</th>
+                    <th>Description</th>
+                    <th>Last</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                                @foreach($tableName as $item)
-        <tr>
-            <td>Fdg</td>
-            <td>{{ $item->fdg }}</td>
-        </tr>
-        @endforeach
+                    @foreach($finishtests as $finishtest)
+                        <tr>
+                                                <td>{{ $finishtest->name }}</td>
+                    <td>{{ $finishtest->description }}</td>
+                    <td>{{ $finishtest->last }}</td>
+
+                        </tr>
+                     @endforeach
                     </tbody>
                 </table>
             </div>

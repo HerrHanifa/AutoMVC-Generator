@@ -105,10 +105,10 @@
             const columnDiv = document.createElement('div');
             columnDiv.classList.add('col-12', 'p-2', 'row');
 
-            for (let i = 1; i <= numFields; i++) {
+            for (let i = 0; i < numFields; i++) {
                 const labelDiv = document.createElement('div');
                 labelDiv.classList.add('col-6', 'pt-5');
-                labelDiv.textContent = `العمود ${i}`;
+                labelDiv.textContent = `العمود ${i+1}`;
                 columnDiv.appendChild(labelDiv);
 
                 const labelSelect = document.createElement('div');
