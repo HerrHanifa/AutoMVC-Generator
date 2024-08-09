@@ -3,14 +3,17 @@ namespace App\Services;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 
 class MigrationService
 {
-    public static function generateMigrationContent($modelName, $fields, $relationships=null)
+    public static function generateMigrationContent($modelName, $fields, $relationships = null)
     {
-      
         $fieldsContent = self::generateFieldsContent($fields);
         $relationshipsContent = self::generateRelationshipsContent($relationships);
+
+        $migrationName = 'create_' . Str::snake(Str::pluralStudly($modelName)) . '_table';
+        $tableName = Str::snake(Str::pluralStudly($modelName));
 
         $migrationContent = <<<EOD
 <?php
@@ -28,7 +31,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('{$modelName}', function (Blueprint \$table) {
+        Schema::create('{$tableName}', function (Blueprint \$table) {
             \$table->id();
             {$fieldsContent}
             {$relationshipsContent}
@@ -43,18 +46,20 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('{$modelName}');
+        Schema::dropIfExists('{$tableName}');
     }
 };
 EOD;
 
-        // تحديد مسار الملف
-        $filePath = database_path('migrations/' . date('Y_m_d_His') . '_create_' . Str::snake(Str::pluralStudly($modelName)) . '_table.php');
+        // تحديد مسار الملف النسبي
+        $fileName = date('Y_m_d_His') . "_{$migrationName}.php";
+        $filePath = database_path('migrations/' . $fileName);
 
         // كتابة المحتوى إلى الملف
         File::put($filePath, $migrationContent);
 
-
+        // تشغيل الميجريشن
+        self::runMigration($fileName);
     }
 
     private static function generateFieldsContent($fields)
@@ -69,14 +74,28 @@ EOD;
 
     private static function generateRelationshipsContent($relationships)
     {
-    
         $content = '';
         if ($relationships) {
-        foreach ($relationships as $relationship) {
-            $content .= "\$table->foreignId('{$relationship['foreign_key']}')->constrained('{$relationship['references_table']}')->onDelete('{$relationship['on_delete']}');\n";
+            foreach ($relationships as $relationship) {
+                $content .= "\$table->foreignId('{$relationship['foreign_key']}')->constrained('{$relationship['references_table']}')->onDelete('{$relationship['on_delete']}');\n";
+            }
         }
-    }
         return $content;
+    }
+
+    public static function runMigration($fileName)
+    {
+        // Use the relative path directly in the migration command
+        $migrationFilePath = 'migrations/' . $fileName;
+
+        if (File::exists(database_path($migrationFilePath))) {
+            // Run the specific migration file
+            Artisan::call('migrate', [
+                '--path' => 'database/' . $migrationFilePath,
+            ]);
+        } else {
+            throw new \Exception("The migration file {$migrationFilePath} does not exist.");
+        }
     }
 }
 

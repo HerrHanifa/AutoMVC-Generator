@@ -337,3 +337,5 @@ Route::get('/التواصل', [indexController::class,'contuct'])->name('contuct
 
 Route::get('/finishtest/index', [App\Http\Controllers\FinishtestController::class, 'index'])->name('finishtest.index');
 Route::get('/finish2test/index', [App\Http\Controllers\Finish2testController::class, 'index'])->name('finish2test.index');
+Route::get('/test5/index', [App\Http\Controllers\Test5Controller::class, 'index'])->name('test5.index');
+Route::get('/test2223/index', [App\Http\Controllers\Test2223Controller::class, 'index'])->name('test2223.index');

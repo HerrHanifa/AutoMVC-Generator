@@ -19,7 +19,7 @@ class ModelService
     {
         $fillable = $columns ? "['" . implode("', '", $columns) . "']" : "[]";
         $hiddenFields = $hidden ? "['" . implode("', '", $hidden) . "']" : "[]";
-
+        $tableName = Str::snake(Str::pluralStudly($tableName));
 
         // تحويل اسم الجدول إلى اسم موديل
         $modelName= ucfirst(Str::camel($tableName));

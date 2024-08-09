@@ -6,7 +6,7 @@
         <div class="col-12 px-0">
             <div class="col-12 p-0 row">
                 <div class="col-12 col-lg-4 py-3 px-3">
-                    <span class="fas fa-articles"></span> <th style="width:150px;">{{$test5s}}</th>
+                    <span class="fas fa-articles"></span> <th style="width:150px;">{{$test2223s}}</th>
                 </div>
                 <div class="col-12 col-lg-4 p-0">
                 </div>
@@ -20,17 +20,17 @@
                     <thead>
                         <tr>
                         <th>#</th>
-                                                <th>Nam</th>
-                    <th>Discripe</th>
+                                                <th>Name222</th>
+                    <th>Nummer222</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($test5s as $test5)
+                    @foreach($test2223s as $test2223)
                         <tr>
                             <td> </td>
-                                                <td>{{ $test5->nam }}</td>
-                    <td>{{ $test5->discripe }}</td>
+                                                <td>{{ $test2223->Name222 }}</td>
+                    <td>{{ $test2223->Nummer222 }}</td>
 
                         </tr>
                      @endforeach
