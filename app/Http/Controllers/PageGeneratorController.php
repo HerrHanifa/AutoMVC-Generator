@@ -38,6 +38,8 @@ class PageGeneratorController extends Controller
     public function createPage(Request $request)
     {
 
+
+      
         // Validate the request
         // $request->validate([
         //     'table_name' => 'required|string|max:255',
@@ -51,6 +53,7 @@ class PageGeneratorController extends Controller
         // dd($columns);
         $controllerName= ucfirst(Str::camel($tableName)) . 'Controller';
         // $controllerName = $request->input('controller_name');
+        $relations=$request->input('relations');
         $selectedFunctions = $request->functions;
 
         $functionsData = array_map('json_decode', $selectedFunctions, []);
@@ -64,12 +67,12 @@ class PageGeneratorController extends Controller
         // dd($functions , $views);
         $pathRoute = $request->input('type_route');
         // Generate Migration
-        $this->MigrationService->generateMigrationContent($tableName, $columns);
+        $this->MigrationService->generateMigrationContent($tableName, $columns,$relations);
         // استخراج أسماء الأعمدة من مصفوفة الأعمدة
         $namescolumns = array_column($columns, 'name');
 
         // استدعاء الدالة مع أسماء الأعمدة فقط
-        $this->ModelService->createModel($tableName, $namescolumns);
+        $this->ModelService->createModel($tableName, $namescolumns,$relations);
         // Generate Controller
         $this->ControllerGeneratorService->createController($controllerName, $functions);
         // Generate Views

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+
 class ModelService
 {
     /**
@@ -27,6 +28,12 @@ class ModelService
         // مسار ملف الموديل
         $modelPath = app_path("Models/{$modelName}.php");
 
+        // توليد العلاقات فقط إذا كانت موجودة
+        $relationsContent = '';
+        if ($relations) {
+            $relationsContent = $this->generateRelations($relations);
+        }
+
         // محتوى الموديل
         $modelTemplate = <<<EOD
 <?php
@@ -37,11 +44,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class {$modelName} extends Model
 {
-      protected \$table = '{$tableName}';
+    protected \$table = '{$tableName}';
     protected \$fillable = {$fillable};
     protected \$hidden = {$hiddenFields};
 
-    {$this->generateRelations($relations)}
+    {$relationsContent}
 }
 EOD;
 
@@ -55,14 +62,14 @@ EOD;
      * @param array $relations
      * @return string
      */
-    private function generateRelations($relations=null)
+    private function generateRelations($relations)
     {
         $relationMethods = '';
-if($relations){
+
         foreach ($relations as $relation) {
             $relationMethods .= $this->generateRelationMethod($relation);
         }
-    }
+
         return $relationMethods;
     }
 
@@ -88,24 +95,3 @@ EOD;
     }
 }
 
-<<<EOD
-مثال على Api:
-{
-    "table_name": "posts",
-    "fillable": ["title", "content", "user_id"],
-    "hidden": ["created_at", "updated_at"],
-    "relations": [
-        {
-            "type": "belongsTo",
-            "name": "user",
-            "model": "App\\Models\\User"
-        },
-        {
-            "type": "hasMany",
-            "name": "comments",
-            "model": "App\\Models\\Comment"
-        }
-    ]
-}
-
-EOD;
