@@ -60,6 +60,7 @@ class PageGeneratorController extends Controller
         }
 
         $requirdViews = $request->input('views');
+        // dd($requirdViews);
         // dd($functions , $views);
         $pathRoute = $request->input('type_route');
         // Generate Migration
@@ -115,7 +116,7 @@ foreach ($functionFiles as $file) {
 
             }
         }
-        $views = ['create' , 'index' , 'show' ,'edit'];
+        $views = ['create' , 'index' ,'edit'];
         return view('admin.migration-maker.create' , compact('migrations_name','functions','views'));
     }
 }

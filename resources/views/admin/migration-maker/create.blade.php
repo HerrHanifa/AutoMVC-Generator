@@ -76,7 +76,7 @@
                     <div class="col-12 p-2">صفحات العرض</div>
                 @foreach ($views as $view )
                 <div class="form-check col-3">
-                    <input class="form-check-input" type="checkbox" name="views['name']" value="{{$view}}" id="{{ $view }}">
+                    <input class="form-check-input" type="checkbox" name="views[]" value="{{$view}}" id="{{ $view }}">
                     <label class="form-check-label" for="{{ $view }}">
                         {{ $view }}
                     </label>

@@ -22,8 +22,8 @@ class ModelService
         $tableName = Str::snake(Str::pluralStudly($tableName));
 
         // تحويل اسم الجدول إلى اسم موديل
-        $modelName= ucfirst(Str::camel($tableName));
-
+        $modelName= ucfirst(Str::singular($tableName));
+        // dd($modelName);
         // مسار ملف الموديل
         $modelPath = app_path("Models/{$modelName}.php");
 

@@ -19,7 +19,7 @@ class ViewGeneratorService
         // dd($tableName);
 
         // جولة على المصفوفة واستدعاء الخدمات المناظرة
-        foreach ($requirdViews as $view) {
+        foreach ($requirdViews as $view ) {
 
             switch ($view) {
                 case 'index':
@@ -49,19 +49,6 @@ class ViewGeneratorService
     }
 
 
-
-    //Create
-    private function createCreateView($tableName, $fields)
-    {
-        $viewPath = resource_path("views/{$tableName}/create.blade.php");
-        $this->ensureDirectoryExists($viewPath);
-
-        $formFields = $this->generateFormFields($fields);
-        $viewTemplate = $this->generateCreateViewTemplate($formFields, $tableName);
-        File::put($viewPath, $viewTemplate);
-    }
-
-
     //ensure
     private function ensureDirectoryExists($filePath)
     {
@@ -70,6 +57,18 @@ class ViewGeneratorService
             File::makeDirectory($directory, 0755, true);
         }
     }
+
+    //Create
+    private function createCreateView($tableName, $fields)
+    {
+        $viewPath = resource_path("views/{$tableName}/create.blade.php");
+        $this->ensureDirectoryExists($viewPath);
+        $formFields = $this->generateFormFields($fields);
+        $viewTemplate = $this->generateCreateViewTemplate($formFields, $tableName);
+        File::put($viewPath, $viewTemplate);
+    }
+
+
 
 
 
@@ -176,18 +175,18 @@ EOD;
     //create Template
     private function generateCreateViewTemplate($formFields, $tableName)
     {
-        $routeName = Str::plural($tableName) . '.store';
+        $routeName = Str::camel($tableName) . '.store';
         return <<<EOD
 @extends('layouts.admin')
 
 @section('content')
-<div class="col-12 p-3">
-    <form action="{{ route('{$routeName}') }}" method="POST">
-        @csrf
-        {$formFields}
-        <button type="submit" class="btn btn-success">Save</button>
-    </form>
-</div>
+    <div class="col-12 p-3">
+        <form action="{{ route('{$routeName}') }}" method="POST">
+            @csrf
+            {$formFields}
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>
+    </div>
 @endsection
 EOD;
     }
@@ -197,20 +196,20 @@ EOD;
     //Edite template
     private function generateEditViewTemplate($formFields, $tableName)
     {
-        $routeName = Str::plural($tableName) . '.update';
-        return <<<EOD
-@extends('layouts.admin')
+        $routeName = Str::camel($tableName).'.update';
+        return <<< EOD
+        @extends('layouts.admin')
 
-@section('content')
-<div class="col-12 p-3">
-    <form action="{{ route('{$routeName}', \$item->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        {$formFields}
-        <button type="submit" class="btn btn-success">Update</button>
-    </form>
-</div>
-@endsection
+        @section('content')
+        <div class="col-12 p-3">
+            <form action="{{ route('{$routeName}', \$item->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                {$formFields}
+                <button type="submit" class="btn btn-success">Update</button>
+            </form>
+        </div>
+        @endsection
 EOD;
     }
 
@@ -224,6 +223,8 @@ EOD;
         $viewFields = '';
         $fieldLabel = [];
         $viewLabel = '';
+        $pathCreate = Str::camel($tableName).'.create';
+        $pathEdit = Str::camel($tableName).'.edit';
         foreach ($fields as $field) {
             $fieldName = $field['name'];
             $fieldLabel = Str::title(str_replace('_', ' ',$fieldName ));
@@ -246,9 +247,14 @@ EOD;
             <div class="col-12 px-0">
                 <div class="col-12 p-0 row">
                     <div class="col-12 col-lg-4 py-3 px-3">
-                        <span class="fas fa-articles"></span> <th style="width:150px;">{{\$$items}}</th>
+                        <span class="fas fa-articles"></span> <th style="width:150px;">{{$items}}</th>
                     </div>
                     <div class="col-12 col-lg-4 p-0">
+                    </div>
+                    <div class="col-12 col-lg-4 p-2 text-lg-endq">
+                        <a href="{{route('$pathCreate')}}">
+                        <span class="btn btn-primary"><span class="fas fa-plus"></span> إضافة جديد</span>
+                        </a>
                     </div>
                 </div>
                 <div class="col-12 divider" style="min-height: 2px;"></div>
@@ -258,16 +264,22 @@ EOD;
                 <div class="col-12 p-0" style="min-width:1100px;">
                     <table class="table table-bordered  table-hover">
                         <thead>
-                            <tr>
                             <th>#</th>
+
                                 {$viewLabel}
-                            </tr>
+
+                            <th></th>
                         </thead>
                         <tbody>
                         @foreach(\$$items as \$$tableName)
                             <tr>
                                 <td> </td>
                                 {$viewFields}
+                                <td>
+                                    <a href="{{route('$pathEdit')}}">
+                                        <span class="btn btn-outline-success btn-sm font-small mx-1"><span class="fas fa-wrench"></span> تعديل </span>
+                                    </a>
+                                </td>
                             </tr>
                          @endforeach
                         </tbody>
@@ -290,9 +302,7 @@ EOD;
     $navPath = resource_path("views/layouts/admin.blade.php");
     $link = <<<EOD
 
-                    <li><a href="{{ route('{$tableName}.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>{$tableName}</a></li>
-
-
+                                    <li><a href="{{ route('{$tableName}.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>{$tableName}</a></li>
 EOD;
 
     $currentNav = File::get($navPath);

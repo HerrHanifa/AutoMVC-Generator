@@ -8,7 +8,9 @@ trait StoreFunction
 {
     public function store(Request $request)
     {
-        // function body here
+        $newItem = $request->all();
+        ModalName::create($newItem);
+        return redirect(route('modalName.index'));
     }
 
 }

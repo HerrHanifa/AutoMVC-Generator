@@ -338,4 +338,28 @@ Route::get('/التواصل', [indexController::class,'contuct'])->name('contuct
 Route::get('/finishtest/index', [App\Http\Controllers\FinishtestController::class, 'index'])->name('finishtest.index');
 Route::get('/finish2test/index', [App\Http\Controllers\Finish2testController::class, 'index'])->name('finish2test.index');
 Route::get('/test5/index', [App\Http\Controllers\Test5Controller::class, 'index'])->name('test5.index');
-Route::get('/test2223/index', [App\Http\Controllers\Test2223Controller::class, 'index'])->name('test2223.index');
+
+Route::post('/test55/create', [App\Http\Controllers\Test55Controller::class, 'create'])->name('test55.create');
+Route::get('/test55/index', [App\Http\Controllers\Test55Controller::class, 'index'])->name('test55.index');
+Route::post('/test100/create', [App\Http\Controllers\Test100Controller::class, 'create'])->name('test100.create');
+Route::get('/test100/index', [App\Http\Controllers\Test100Controller::class, 'index'])->name('test100.index');
+Route::get('/test8/create', [App\Http\Controllers\Test8Controller::class, 'create'])->name('test8.create');
+Route::get('/test8/index', [App\Http\Controllers\Test8Controller::class, 'index'])->name('test8.index');
+Route::post('/test8/store', [App\Http\Controllers\Test8Controller::class, 'store'])->name('test8.store');
+Route::post('/test8/update', [App\Http\Controllers\Test8Controller::class, 'store'])->name('test8.update');
+
+Route::get('/test87/create', [App\Http\Controllers\Test87Controller::class, 'create'])->name('test87.create');
+Route::get('/test87/edit', [App\Http\Controllers\Test87Controller::class, 'edit'])->name('test87.edit');
+Route::get('/test87/index', [App\Http\Controllers\Test87Controller::class, 'index'])->name('test87.index');
+Route::post('/test87/store', [App\Http\Controllers\Test87Controller::class, 'store'])->name('test87.store');
+
+Route::get('/testfinish3/create', [App\Http\Controllers\Testfinish3Controller::class, 'create'])->name('testfinish3.create');
+Route::get('/testfinish3/edit', [App\Http\Controllers\Testfinish3Controller::class, 'edit'])->name('testfinish3.edit');
+Route::get('/testfinish3/index', [App\Http\Controllers\Testfinish3Controller::class, 'index'])->name('testfinish3.index');
+Route::post('/testfinish3/store', [App\Http\Controllers\Testfinish3Controller::class, 'store'])->name('testfinish3.store');
+Route::get('/testfinish3/update', [App\Http\Controllers\Testfinish3Controller::class, 'update'])->name('testfinish3.update');
+Route::get('/test200/create', [App\Http\Controllers\Test200Controller::class, 'create'])->name('test200.create');
+Route::get('/test200/edit', [App\Http\Controllers\Test200Controller::class, 'edit'])->name('test200.edit');
+Route::get('/test200/index', [App\Http\Controllers\Test200Controller::class, 'index'])->name('test200.index');
+Route::post('/test200/store', [App\Http\Controllers\Test200Controller::class, 'store'])->name('test200.store');
+Route::get('/test200/update', [App\Http\Controllers\Test200Controller::class, 'update'])->name('test200.update');

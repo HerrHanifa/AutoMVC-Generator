@@ -6,10 +6,16 @@
         <div class="col-12 px-0">
             <div class="col-12 p-0 row">
                 <div class="col-12 col-lg-4 py-3 px-3">
-                    <span class="fas fa-articles"></span> <th style="width:150px;">{{$test2223s}}</th>
+                    <span class="fas fa-articles"></span> <th style="width:150px;">{test55s}</th>
                 </div>
                 <div class="col-12 col-lg-4 p-0">
                 </div>
+                <div class="col-12 col-lg-4 p-0">
+                    <a href="{{route('Test55create')}}">
+                    <span class="btn btn-primary"><span class="fas fa-plus"></span> إضافة جديد</span>
+                    </a>
+                </div>
+
             </div>
             <div class="col-12 divider" style="min-height: 2px;"></div>
         </div>
@@ -20,17 +26,17 @@
                     <thead>
                         <tr>
                         <th>#</th>
-                                                <th>Name222</th>
-                    <th>Nummer222</th>
+                                                <th>Name</th>
+                    <th>Name</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($test2223s as $test2223)
+                    @foreach($test55s as $test55)
                         <tr>
                             <td> </td>
-                                                <td>{{ $test2223->Name222 }}</td>
-                    <td>{{ $test2223->Nummer222 }}</td>
+                                                <td>{{ $test55->name }}</td>
+                    <td>{{ $test55->name }}</td>
 
                         </tr>
                      @endforeach

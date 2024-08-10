@@ -323,13 +323,16 @@
                             </div>
                             <div class="col-12 px-0" >
                                 <ul class="sub-item font-1" style="list-style:none;">
-                    <li><a href="{{ route('test2223.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test2223</a></li>
+                                    <li><a href="{{ route('test200.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test200</a></li>
+                                    <li><a href="{{ route('testfinish3.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>testfinish3</a></li>
+                                    <li><a href="{{ route('test87.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test87</a></li>
+                                    <li><a href="{{ route('test8.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test8</a></li>
+                                    <li><a href="{{ route('test100.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test100</a></li>
+                                    <li><a href="{{ route('test55.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test55</a></li>
 
 
-                    <li><a href="{{ route('test5.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test5</a></li>
 
-
-                    <li><a href="{{ route('finish2test.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>finish2test</a></li>
+                                 <li><a href="{{ route('finish2test.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>finish2test</a></li>
 
 
 

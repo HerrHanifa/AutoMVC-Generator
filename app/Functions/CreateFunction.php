@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 trait CreateFunction
 {
-    public function create(Request $request)
+    public function create()
     {
-        // function body here
+        return view('modalName.create');
     }
 
 }
