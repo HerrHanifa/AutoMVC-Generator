@@ -2,14 +2,14 @@
 
 namespace App\Functions;
 
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 trait UpdateFunction
 {
-    public function update(Request $request)
+    public function update(Request $request , $id)
     {
-        $updateItem = $request->all();
-        ModalName::update($updateItem);
+        $updateItem = ModalName::where('id','=',$id);
+        $updateItem->update($request->all());
         return redirect(route('modalName.index'));
     }
 

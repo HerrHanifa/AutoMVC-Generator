@@ -51,13 +51,41 @@ class PageGeneratorController extends Controller
         // dd($columns);
         $controllerName= ucfirst(Str::camel($tableName)) . 'Controller';
         // $controllerName = $request->input('controller_name');
-        $selectedFunctions = $request->functions;
-
-        $functionsData = array_map('json_decode', $selectedFunctions, []);
+        $requiredFunctions = $request->functions;
         $functions = [];
-        foreach ($functionsData as $functionData) {
-            $functions[$functionData->function] = $functionData->method;
-        }
+        $functionFiles = scandir(app_path('Functions'));
+        // dd($requiredFunctions);
+        $functionFiles = array_intersect($functionFiles, $requiredFunctions);
+
+        foreach ($functionFiles as $file) {
+            if (preg_match('/Function\.php$/', $file)) {
+                $functionName = Str::camel(str_replace('Function.php', '', $file));
+
+                $className = basename($file, '.php');
+                $pathClass = 'App\Functions\\'.$className;
+                $reflectionClass = new ReflectionClass($pathClass);
+                $method = $reflectionClass->getMethod($functionName);
+                $parameters = $method->getParameters();
+                $requestParameter = false;
+                $method='get';
+                foreach ($parameters as $parameter) {
+                    if ($parameter->getType() && $parameter->getType()->getName() === 'Illuminate\Http\Request') {
+                        $method = 'post';
+                        break;
+                    }
+                }
+                $param = '';
+                foreach ($parameters as $parameter) {
+                    if ($parameter->getName() !='request')
+                    $param = $parameter->getName();
+                }
+                $functions[$functionName] = [
+                    'method' => $method,
+                    'params' => $param
+                ];
+
+                    }
+                }
 
         $requirdViews = $request->input('views');
         // dd($requirdViews);
@@ -99,23 +127,12 @@ $functions = [];
 foreach ($functionFiles as $file) {
     if (preg_match('/Function\.php$/', $file)) {
         $functionName = Str::camel(str_replace('Function.php', '', $file));
-
         $className = basename($file, '.php');
-        $pathClass = 'App\Functions\\'.$className;
-        $reflectionClass = new ReflectionClass($pathClass);
-        $method = $reflectionClass->getMethod($functionName);
-        $parameters = $method->getParameters();
-        $requestParameter = false;
-        foreach ($parameters as $parameter) {
-            if ($parameter->getType() && $parameter->getType()->getName() === 'Illuminate\Http\Request') {
-                $requestParameter = true;
-                break;
-            }
-        }
-        $functions[$functionName] = $requestParameter ? 'POST' : 'GET';
+        $functions[$functionName] = $file;
 
             }
         }
+        // dd($functions);
         $views = ['create' , 'index' ,'edit'];
         return view('admin.migration-maker.create' , compact('migrations_name','functions','views'));
     }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait ShowFunction
 {
-    public function show()
+    public function show($id)
     {
         // function body here
     }

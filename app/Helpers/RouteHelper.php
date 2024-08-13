@@ -17,14 +17,17 @@ class RouteHelper
         $routeContent = File::get($routeFilePath);
 
         $newRoutes = '';
-        foreach ($functions as $function => $method) {
-            $routeName = $function;
-            $routeMethod = strtolower($method);
+        foreach ($functions as $functionName => $functionData) {
+            $routeName = $functionName;
+            $routeMethod = strtolower($functionData['method']);
+            $routeParam = '';
+            if($functionData['params'])
+            $routeParam = '/{'.$functionData['params'].'}';
 
 
             $newRoutes .= <<<EOD
 
-Route::{$routeMethod}('/{$urlPath}/{$routeName}', [App\Http\Controllers\\{$controllerName}::class, '{$routeName}'])->name('{$urlPath}.{$routeName}');
+Route::{$routeMethod}('/{$urlPath}/{$routeName}{$routeParam}', [App\Http\Controllers\\{$controllerName}::class, '{$routeName}'])->name('{$urlPath}.{$routeName}');
 EOD;
         }
 

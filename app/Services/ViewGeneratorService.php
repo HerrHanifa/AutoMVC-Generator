@@ -202,7 +202,7 @@ EOD;
 
         @section('content')
         <div class="col-12 p-3">
-            <form action="{{ route('{$routeName}', \$item->id) }}" method="POST">
+            <form action="{{ route('{$routeName}', \$$tableName'->id') }}" method="POST">
                 @csrf
                 @method('PUT')
                 {$formFields}
@@ -276,7 +276,7 @@ EOD;
                                 <td> </td>
                                 {$viewFields}
                                 <td>
-                                    <a href="{{route('$pathEdit')}}">
+                                    <a href="{{route('$pathEdit', \$$TableName'->id')}}">
                                         <span class="btn btn-outline-success btn-sm font-small mx-1"><span class="fas fa-wrench"></span> تعديل </span>
                                     </a>
                                 </td>

@@ -363,3 +363,8 @@ Route::get('/test200/edit', [App\Http\Controllers\Test200Controller::class, 'edi
 Route::get('/test200/index', [App\Http\Controllers\Test200Controller::class, 'index'])->name('test200.index');
 Route::post('/test200/store', [App\Http\Controllers\Test200Controller::class, 'store'])->name('test200.store');
 Route::get('/test200/update', [App\Http\Controllers\Test200Controller::class, 'update'])->name('test200.update');
+
+Route::get('/test564/create', [App\Http\Controllers\Test564Controller::class, 'create'])->name('test564.create');
+Route::get('/test564/edit/{id}', [App\Http\Controllers\Test564Controller::class, 'edit'])->name('test564.edit');
+Route::get('/test564/index', [App\Http\Controllers\Test564Controller::class, 'index'])->name('test564.index');
+Route::post('/test564/store', [App\Http\Controllers\Test564Controller::class, 'store'])->name('test564.store');
