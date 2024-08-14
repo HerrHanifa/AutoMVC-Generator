@@ -9,12 +9,20 @@ class MigrationService
 {
     public static function generateMigrationContent($modelName, $fields, $relationships = null)
     {
+        // توليد محتوى الحقول
         $fieldsContent = self::generateFieldsContent($fields);
-        $relationshipsContent = self::generateRelationshipsContent($relationships);
 
+        // توليد محتوى العلاقات فقط إذا كانت موجودة
+        $relationshipsContent = '';
+        if ($relationships) {
+            $relationshipsContent = self::generateRelationshipsContent($relationships);
+        }
+
+        // تحديد اسم الميجريشن واسم الجدول
         $migrationName = 'create_' . Str::snake(Str::pluralStudly($modelName)) . '_table';
         $tableName = Str::snake(Str::pluralStudly($modelName));
 
+        // توليد محتوى الميجريشن
         $migrationContent = <<<EOD
 <?php
 
@@ -75,10 +83,8 @@ EOD;
     private static function generateRelationshipsContent($relationships)
     {
         $content = '';
-        if ($relationships) {
-            foreach ($relationships as $relationship) {
-                $content .= "\$table->foreignId('{$relationship['foreign_key']}')->constrained('{$relationship['references_table']}')->onDelete('{$relationship['on_delete']}');\n";
-            }
+        foreach ($relationships as $relationship) {
+            $content .= "\$table->foreignId('{$relationship['foreign_key']}')->constrained('{$relationship['references_table']}')->onDelete('{$relationship['on_delete']}');\n";
         }
         return $content;
     }
