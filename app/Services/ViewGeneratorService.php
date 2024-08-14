@@ -117,24 +117,32 @@ class ViewGeneratorService
 
         if ($field['type'] === 'text') {
             return <<<EOD
-<div class="form-group">
-    <label for="{$fieldName}">{$fieldLabel}</label>
-    <textarea name="{$fieldName}" id="{$fieldName}" class="form-control">{$value}</textarea>
-</div>
+    <div class="col-12  p-2" >
+        <div class="col-12">
+            {$fieldLabel}
+        </div>
+        <div class="col-12 pt-3">
+            <textarea name="{$fieldName}" id="{$fieldName}" class="editor with-file-explorer">{$value}</textarea>
+        </div>
+    </div>
 
 EOD;}
 
 
-         if($field['type'] === 'string') {
+         if($field['type'] === 'string' && $field['typestring'] ==='string' ) {
             return <<<EOD
-<div class="form-group">
-    <label for="{$fieldName}">{$fieldLabel}</label>
-    <input type="text" name="{$fieldName}" id="{$fieldName}" class="form-control" value="{$value}">
-</div>
+    <div class="col-12 col-lg-6 p-2">
+        <div class="col-12">
+            {$fieldLabel}
+        </div>
+        <div class="col-12 pt-3">
+            <input type="text" name="{$fieldName}" id="{$fieldName}" class="form-control" value="{$value}">
+        </div>
+    </div>
 
 EOD;
         }
-        else if ($field['type'] ==='file' ) {
+        else if ($field['type'] ==='string' && $field['typestring'] ==='file' ) {
 
             return <<<EOD
     <div class="form-group">
@@ -168,6 +176,33 @@ EOD;
         EOD;
 
                 }
+
+                else if ($field['type'] === 'datetime') {
+                    return <<<EOD
+            <div class="col-12 col-lg-6 p-2">
+                    <div class="col-12">
+                        {$fieldLabel}
+                    </div>
+                    <div class="col-12 pt-3">
+                         <input type="datetime-local" name="{$fieldName}" id="{$fieldName}" class="form-control" value="{$value}">
+                    </div>
+            </div>
+            EOD;
+                }
+
+                else if ($field['type'] === 'float') {
+                    return <<<EOD
+            <div class="col-12 col-lg-6 p-2">
+                <div class="col-12">
+                    {$fieldLabel}
+                </div>
+                <div class="col-12 pt-3">
+                    <input type="number" name="{$fieldName}" id="{$fieldName}" class="form-control" value="{$value}">
+                </div>
+            </div>
+            
+            EOD;
+                }
     }
 
 
@@ -181,11 +216,23 @@ EOD;
 
 @section('content')
     <div class="col-12 p-3">
-        <form action="{{ route('{$routeName}') }}" method="POST">
-            @csrf
-            {$formFields}
-            <button type="submit" class="btn btn-success">Save</button>
-        </form>
+        <div class="col-12 col-lg-12 p-0 " >
+            <form class="row" enctype="multipart/form-data" action="{{ route('{$routeName}') }}" method="POST">
+                @csrf
+                <div class="col-12 col-lg-8 p-0 main-box">
+                    <div class="col-12 px-0">
+                        <div class="col-12 px-3 py-3">
+                            <span class="fas fa-info-circle"></span> إضافة جديد
+                        </div>
+                    <div class="col-12 divider" style="min-height: 2px;"></div>
+                </div>
+                <div class="col-12 p-3 row">
+                    {$formFields}
+                </div>
+                </div>
+                <button type="submit" class="btn btn-success">Save</button>
+            </form>
+        </div>
     </div>
 @endsection
 EOD;
@@ -206,7 +253,9 @@ EOD;
                 @csrf
                 @method('PUT')
                 {$formFields}
+                <div class="col-12 p-3">
                 <button type="submit" class="btn btn-success">Update</button>
+                </div>
             </form>
         </div>
         @endsection

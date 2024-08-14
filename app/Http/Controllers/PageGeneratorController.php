@@ -9,7 +9,7 @@ use App\Services\ViewGeneratorService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Helpers\RouteHelper;
-
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use ReflectionClass;
@@ -111,6 +111,7 @@ class PageGeneratorController extends Controller
         $this->ViewGeneratorService->createViews($tableName, $columns, $requirdViews);
         // Generate Routes
         RouteHelper::addRoutes($controllerName, $functions, $pathRoute);
+        Artisan::call('route:cache');
         return response()->json(['message' => 'Page created successfully!']);
     }
 

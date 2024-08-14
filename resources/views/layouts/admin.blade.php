@@ -323,9 +323,17 @@
                             </div>
                             <div class="col-12 px-0" >
                                 <ul class="sub-item font-1" style="list-style:none;">
-                                    <li><a href="{{ route('test525.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test525</a></li>
+                                    <li><a href="{{ route('testfront2.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>testfront2</a></li>
+                                    <li><a href="{{ route('testfront.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>testfront</a></li>
+                                    <li><a href="{{ route('zakortest12.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>zakortest12</a></li>
+                                    <li><a href="{{ route('zakortest11.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>zakortest11</a></li>
+                                    <li><a href="{{ route('zakortest8.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>zakortest8</a></li>
+                                    <li><a href="{{ route('zakortest7.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>zakortest7</a></li>
+                                    <li><a href="{{ route('zakortest4.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>zakortest4</a></li>
+                                    <li><a href="{{ route('zakortest3.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>zakortest3</a></li>
+                                    <li><a href="{{ route('zakortest2.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>zakortest2</a></li>
+                                    <li><a href="{{ route('zakortest.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>zakortest</a></li>
                                    
-                                    <li><a href="{{ route('test564.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test564</a></li>
                                     <li><a href="{{ route('test200.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test200</a></li>
                                     <li><a href="{{ route('testfinish3.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>testfinish3</a></li>
                                     <li><a href="{{ route('test87.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test87</a></li>
