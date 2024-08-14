@@ -8,7 +8,7 @@ trait UpdateFunction
 {
     public function update(Request $request , $id)
     {
-        $updateItem = ModalName::where('id','=',$id);
+        $updateItem = ModalName::findOrFail($id);
         $updateItem->update($request->all());
         return redirect(route('modalName.index'));
     }

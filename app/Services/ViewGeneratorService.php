@@ -63,7 +63,7 @@ class ViewGeneratorService
     {
         $viewPath = resource_path("views/{$tableName}/create.blade.php");
         $this->ensureDirectoryExists($viewPath);
-        $formFields = $this->generateFormFields($fields);
+        $formFields = $this->generateFormFields($tableName,$fields);
         $viewTemplate = $this->generateCreateViewTemplate($formFields, $tableName);
         File::put($viewPath, $viewTemplate);
     }
@@ -77,8 +77,8 @@ class ViewGeneratorService
     {
         $viewPath = resource_path("views/{$tableName}/edit.blade.php");
         $this->ensureDirectoryExists($viewPath);
-              $formFields = $this->generateFormFields($fields);
-        $formFields = $this->generateFormFields($fields, true);
+        // $formFields = $this->generateFormFields($fields);
+        $formFields = $this->generateFormFields($tableName,$fields, true);
         $viewTemplate = $this->generateEditViewTemplate($formFields, $tableName);
         File::put($viewPath, $viewTemplate);
     }
@@ -97,11 +97,11 @@ class ViewGeneratorService
 
 
     //form
-    private function generateFormFields($fields, $isEdit = false)
+    private function generateFormFields($tableName,$fields, $isEdit = false)
     {
         $formFields = '';
         foreach ($fields as $field) {
-            $formFields .= $this->generateFieldTemplate($field, $isEdit);
+            $formFields .= $this->generateFieldTemplate($tableName,$field, $isEdit);
         }
         return $formFields;
     }
@@ -109,11 +109,11 @@ class ViewGeneratorService
 
 
  //Field Template
-    private function generateFieldTemplate($field, $isEdit = false)
+    private function generateFieldTemplate($tableName,$field, $isEdit = false)
     {
         $fieldName = $field['name'];
         $fieldLabel = Str::title(str_replace('_', ' ', $fieldName));
-        $value = $isEdit ? "{{ \$item->{$fieldName} }}" : "{{ old('{$fieldName}') }}";
+        $value = $isEdit ? "{{ \$$tableName->{$fieldName} }}" : "{{ old('{$fieldName}') }}";
 
         if ($field['type'] === 'text') {
             return <<<EOD
@@ -202,7 +202,7 @@ EOD;
 
         @section('content')
         <div class="col-12 p-3">
-            <form action="{{ route('{$routeName}', \$$tableName'->id') }}" method="POST">
+            <form action="{{ route('{$routeName}', \${$tableName}->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 {$formFields}
@@ -276,7 +276,7 @@ EOD;
                                 <td> </td>
                                 {$viewFields}
                                 <td>
-                                    <a href="{{route('$pathEdit', \$$TableName'->id')}}">
+                                    <a href="{{route('$pathEdit', \${$tableName}->id)}}">
                                         <span class="btn btn-outline-success btn-sm font-small mx-1"><span class="fas fa-wrench"></span> تعديل </span>
                                     </a>
                                 </td>

@@ -8,8 +8,8 @@ trait EditFunction
 {
     public function edit($id)
     {
-        $modalNames = ModalName::get()->where('id','=',$id);
-        return view('modalName.edit',compact('modalNames'));
+        $modalName = ModalName::findOrFail($id);
+        return view('modalName.edit',compact('modalName'));
     }
 
 }

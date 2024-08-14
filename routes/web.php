@@ -368,3 +368,14 @@ Route::get('/test564/create', [App\Http\Controllers\Test564Controller::class, 'c
 Route::get('/test564/edit/{id}', [App\Http\Controllers\Test564Controller::class, 'edit'])->name('test564.edit');
 Route::get('/test564/index', [App\Http\Controllers\Test564Controller::class, 'index'])->name('test564.index');
 Route::post('/test564/store', [App\Http\Controllers\Test564Controller::class, 'store'])->name('test564.store');
+Route::get('/test258/create', [App\Http\Controllers\Test258Controller::class, 'create'])->name('test258.create');
+Route::get('/test258/edit/{id}', [App\Http\Controllers\Test258Controller::class, 'edit'])->name('test258.edit');
+Route::get('/test258/index', [App\Http\Controllers\Test258Controller::class, 'index'])->name('test258.index');
+Route::post('/test258/store', [App\Http\Controllers\Test258Controller::class, 'store'])->name('test258.store');
+Route::put('/test258/update/{id}', [App\Http\Controllers\Test258Controller::class, 'update'])->name('test258.update');
+
+Route::get('/test525/create', [App\Http\Controllers\Test525Controller::class, 'create'])->name('test525.create');
+Route::get('/test525/edit/{id}', [App\Http\Controllers\Test525Controller::class, 'edit'])->name('test525.edit');
+Route::get('/test525/index', [App\Http\Controllers\Test525Controller::class, 'index'])->name('test525.index');
+Route::post('/test525/store', [App\Http\Controllers\Test525Controller::class, 'store'])->name('test525.store');
+Route::put('/test525/update/{id}', [App\Http\Controllers\Test525Controller::class, 'update'])->name('test525.update');

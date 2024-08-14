@@ -79,6 +79,8 @@ class PageGeneratorController extends Controller
                     if ($parameter->getName() !='request')
                     $param = $parameter->getName();
                 }
+                if($param != ''&& $method == 'post')
+                $method = 'put';
                 $functions[$functionName] = [
                     'method' => $method,
                     'params' => $param
