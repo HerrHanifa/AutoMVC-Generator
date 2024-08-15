@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-12 col-lg-4 p-2 text-lg-endq">
                     <a href="{{route('exelexport.create.web')}}">
-                    <span class="btn btn-primary"><span class="fas fa-plus"></span> إضافة جديد</span>
+                    <span class="btn btn-primary"><span class="fas fa-plus"></span> استيراد ملف Api</span>
                     </a>
                 </div>
             </div>
