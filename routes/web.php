@@ -354,3 +354,6 @@ Route::get('/test4/edit', [App\Http\Controllers\controlPanal\Test4Controller::cl
 Route::get('/test4/index', [App\Http\Controllers\controlPanal\Test4Controller::class, 'index'])->name('test4.index.web');
 Route::post('/test4/store', [App\Http\Controllers\controlPanal\Test4Controller::class, 'store'])->name('test4.store.web');
 Route::post('/test4/update', [App\Http\Controllers\controlPanal\Test4Controller::class, 'update'])->name('test4.update.web');
+Route::get('/exelexport/create', [App\Http\Controllers\controlPanal\ExelexportController::class, 'create'])->name('exelexport.create.web');
+Route::get('/exelexport/index', [App\Http\Controllers\controlPanal\ExelexportController::class, 'index'])->name('exelexport.index.web');
+Route::get('/exelexport/store', [App\Http\Controllers\controlPanal\ExelexportController::class, 'store'])->name('exelexport.store.web');
