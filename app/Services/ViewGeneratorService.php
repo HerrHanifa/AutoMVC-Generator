@@ -210,7 +210,7 @@ EOD;
     //create Template
     private function generateCreateViewTemplate($formFields, $tableName)
     {
-        $routeName = Str::camel($tableName) . '.store';
+        $routeName = Str::camel($tableName) . '.store' . '.web';
         return <<<EOD
 @extends('layouts.admin')
 
@@ -243,7 +243,7 @@ EOD;
     //Edite template
     private function generateEditViewTemplate($formFields, $tableName)
     {
-        $routeName = Str::camel($tableName).'.update';
+        $routeName = Str::camel($tableName).'.update'. '.web' ;
         return <<< EOD
         @extends('layouts.admin')
 
@@ -272,8 +272,8 @@ EOD;
         $viewFields = '';
         $fieldLabel = [];
         $viewLabel = '';
-        $pathCreate = Str::camel($tableName).'.create';
-        $pathEdit = Str::camel($tableName).'.edit';
+        $pathCreate = Str::camel($tableName).'.create'. '.web';
+        $pathEdit = Str::camel($tableName).'.edit'. '.web';
         foreach ($fields as $field) {
             $fieldName = $field['name'];
             $fieldLabel = Str::title(str_replace('_', ' ',$fieldName ));
@@ -351,7 +351,7 @@ EOD;
     $navPath = resource_path("views/layouts/admin.blade.php");
     $link = <<<EOD
 
-                                    <li><a href="{{ route('{$tableName}.index') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>{$tableName}</a></li>
+                                    <li><a href="{{ route('{$tableName}.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>{$tableName}</a></li>
 EOD;
 
     $currentNav = File::get($navPath);

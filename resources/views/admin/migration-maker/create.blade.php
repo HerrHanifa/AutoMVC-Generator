@@ -47,28 +47,37 @@
                 </div>
                 <div id="relations-container"></div>
                 <div class="col-12 col-lg-6 p-2">
-                    <div class="col-12 p-2">
-                        حدد نوع الربط مع الواجهات
-                    </div>
+                    <div class="col-12 p-2">حدد نوع الربط مع الواجهات</div>
                     <div class="col-4 pt-3">
-                        <select class="form-control" name="type_route" >
-                            <option value="web">blade</option>
-                            <option value="api">api</option>
+                        <select id="route-type" class="form-control" name="type_route[]" multiple>
+                            <option value="web">Blade</option>
+                            <option value="api">API</option>
                         </select>
                     </div>
                 </div>
+                
                 <div class="col-12 col-lg-6 p-2">
-                    <div class="col-12">
-                        الفانكشنات المتاحة
-                    </div>
+                    <div class="col-12">الفانكشنات المتاحة لـ Blade</div>
                     <div class="col-12 pt-3">
-                        <select class="form-control select2-select" name="functions[]" multiple>
+                        <select id="functions-blade" class="form-control select2-select" name="functions_blade[]" multiple>
                             @foreach($functions as $function => $file)
                                 <option value="{{$file}}">{{$function}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
+                
+                <div id="collapse-api" class="collapse col-12 col-lg-6 p-2">
+                    <div class="col-12">الفانكشنات المتاحة لـ API</div>
+                    <div class="col-12 pt-3">
+                        <select id="functions-api" class="form-control select2-select" name="functions_api[]" multiple>
+                            @foreach($functions as $function => $file)
+                                <option value="{{$file}}">{{$function}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                
 
                 <div class="col-12 p-3 row">
                     <div class="col-12 p-2">صفحات العرض</div>
@@ -95,6 +104,11 @@
         const columnsContainer = document.getElementById('fields-container');
         const addRelationButton = document.getElementById('add-relation');
         const relationsContainer = document.getElementById('relations-container');
+
+        const routeTypeSelect = document.getElementById('route-type');
+        const collapseApi = document.getElementById('collapse-api');
+        const functionsBlade = document.getElementById('functions-blade');
+        const functionsApi = document.getElementById('functions-api');
 
         generateButton.addEventListener('click', (e) => {
             e.preventDefault();
@@ -270,6 +284,34 @@
 
             relationsContainer.appendChild(relationDiv);
         });
+
+        routeTypeSelect.addEventListener('change', (event) => {
+        const selectedOptions = Array.from(event.target.selectedOptions).map(option => option.value);
+
+        // إذا تم اختيار Blade و API معاً
+        if (selectedOptions.includes('web') && selectedOptions.includes('api')) {
+            functionsBlade.closest('.col-12.col-lg-6.p-2').classList.remove('d-none');
+            collapseApi.classList.add('show');
+        }
+
+        // إذا تم اختيار Blade فقط
+        if (selectedOptions.includes('web') && !selectedOptions.includes('api')) {
+            functionsBlade.closest('.col-12.col-lg-6.p-2').classList.remove('d-none');
+            collapseApi.classList.remove('show');
+        }
+
+        // إذا تم اختيار API فقط
+        if (selectedOptions.includes('api') && !selectedOptions.includes('web')) {
+            functionsBlade.closest('.col-12.col-lg-6.p-2').classList.add('d-none');
+            collapseApi.classList.add('show');
+        }
+
+        // إذا لم يتم اختيار أي شيء
+        if (!selectedOptions.includes('web') && !selectedOptions.includes('api')) {
+            functionsBlade.closest('.col-12.col-lg-6.p-2').classList.add('d-none');
+            collapseApi.classList.remove('show');
+        }
+    });
     });
 </script>
 @endsection
