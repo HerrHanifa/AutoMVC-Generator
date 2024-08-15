@@ -324,12 +324,7 @@
                             <div class="col-12 px-0" >
                                 <ul class="sub-item font-1" style="list-style:none;">
                                     <li><a href="{{ route('exelexport.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>exelexport</a></li>
-                                    <li><a href="{{ route('test4.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test4</a></li>
-                                    <li><a href="{{ route('test3.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test3</a></li>
-                                    <li><a href="{{ route('test2.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test2</a></li>
-                                    <li><a href="{{ route('test1.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>test1</a></li>
-                             
-
+                                    
                                     <li><a href="{{route('admin.articles.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>المقالات</a></li>
                                     <li><a href="{{route('admin.clients.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span> فريق العمل</a></li>
                                     <li><a href="{{route('admin.slider.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>الواجهة الرئيسية </a></li>
