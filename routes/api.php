@@ -58,3 +58,8 @@ Route::get('/test4/edit', [App\Http\Controllers\Api\Test4Controller::class, 'edi
 Route::get('/test4/index', [App\Http\Controllers\Api\Test4Controller::class, 'index'])->name('test4.index.api');
 Route::get('/test4/store', [App\Http\Controllers\Api\Test4Controller::class, 'store'])->name('test4.store.api');
 Route::get('/test4/update', [App\Http\Controllers\Api\Test4Controller::class, 'update'])->name('test4.update.api');
+Route::get('/imagepro/index', [App\Http\Controllers\Api\ImageproController::class, 'index'])->name('imagepro.index.api');
+Route::get('/imagetest/index', [App\Http\Controllers\Api\ImagetestController::class, 'index'])->name('imagetest.index.api');
+Route::get('/imagetest1/index', [App\Http\Controllers\Api\Imagetest1Controller::class, 'index'])->name('imagetest1.index.api');
+Route::get('/imagetest2/index', [App\Http\Controllers\Api\Imagetest2Controller::class, 'index'])->name('imagetest2.index.api');
+Route::get('/imagetest3/index', [App\Http\Controllers\Api\Imagetest3Controller::class, 'index'])->name('imagetest3.index.api');

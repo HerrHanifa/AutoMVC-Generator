@@ -69,6 +69,7 @@ class BladeControllerGeneratorService
 namespace App\Http\Controllers\controlPanal;
 
 use App\Http\Controllers\Controller;
+use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 {$traits}
 {$modelPath}

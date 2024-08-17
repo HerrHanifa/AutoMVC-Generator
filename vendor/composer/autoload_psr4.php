@@ -139,5 +139,6 @@ return array(
     'Biscolab\\ReCaptcha\\' => array($vendorDir . '/biscolab/laravel-recaptcha/src'),
     'Barryvdh\\Debugbar\\' => array($vendorDir . '/barryvdh/laravel-debugbar/src'),
     'Aws\\' => array($vendorDir . '/aws/aws-sdk-php/src'),
+    'App\\Helpers\\' => array($baseDir . '/app/Helpers'),
     'App\\' => array($baseDir . '/app'),
 );

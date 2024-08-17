@@ -323,6 +323,11 @@
                             </div>
                             <div class="col-12 px-0" >
                                 <ul class="sub-item font-1" style="list-style:none;">
+                                    <li><a href="{{ route('imagetest3.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>imagetest3</a></li>
+                                    <li><a href="{{ route('imagetest2.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>imagetest2</a></li>
+                                    <li><a href="{{ route('imagetest1.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>imagetest1</a></li>
+                                    <li><a href="{{ route('imagetest.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>imagetest</a></li>
+                                    <li><a href="{{ route('imagepro.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>imagepro</a></li>
                                     <li><a href="{{ route('exelexport.index.web') }}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>exelexport</a></li>
                                     
                                     <li><a href="{{route('admin.articles.index')}}" style="font-size: 16px;"><span class="fal fa-book px-2" style="width: 28px;font-size: 15px;"></span>المقالات</a></li>

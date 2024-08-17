@@ -43,11 +43,15 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Modules\\": "Modules/"
+            "Modules\\": "Modules/",
+            "App\\Helpers\\": "app/Helpers/"
+    
         
         },
         "files": [
-            "app/Helpers/makingFilesHelper.php"
+            "app/Helpers/makingFilesHelper.php",
+            "app/Helpers/ImageHelper.php"
+
         ]
       
     
