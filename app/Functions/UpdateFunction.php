@@ -8,7 +8,7 @@ use App\Helpers\ImageHelper;
 trait UpdateFunction
 {
     /**
-     * Update an item with the given ID.
+     * Aktualisiert ein Element mit der angegebenen ID.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -16,33 +16,33 @@ trait UpdateFunction
      */
     public function update(Request $request, $id)
     {
-        // العثور على العنصر باستخدام الـ ID
+        // جلب العنصر المراد تحديثه من قاعدة البيانات
         $updateItem = ModalName::findOrFail($id);
-
+    
         // الحصول على جميع البيانات من الطلب
         $updateData = $request->all();
-
-        // الحصول على جميع الملفات من الطلب
+    
+        // الحصول على جميع الملفات من الطلب (في حال وجود صور)
         $files = $request->allFiles();
 
-        // حلقة عبر الملفات لمعالجة الصور
+        // Schleife durch die Dateien, um Bilder zu verarbeiten
         foreach ($files as $key => $file) {
-            // التحقق مما إذا كان الملف صورة صالحة
+            // Überprüfen, ob die Datei ein gültiges Bild ist
             if ($file->isValid() && in_array($file->extension(), ['jpeg', 'png', 'jpg', 'gif', 'svg', 'webp'])) {
-                // حذف الصورة القديمة إذا كانت موجودة
+                // Altes Bild löschen, falls vorhanden
                 if (isset($updateItem[$key]) && !empty($updateItem[$key])) {
-                    ImageHelper::deleteImage($updateItem[$key]); // استخدم الهيلبر لحذف الصورة القديمة
+                    ImageHelper::deleteImage($updateItem[$key]); // Hilfsfunktion zum Löschen des alten Bildes verwenden
                 }
 
-                // استخدام الهيلبر لتحميل الصورة الجديدة والحصول على مسارها
+                // Hilfsfunktion verwenden, um das neue Bild hochzuladen und den Pfad zu erhalten
                 $updateData[$key] = ImageHelper::handleImageUpload($file, 'uploads/ModalName_images');
             }
         }
 
-        // تحديث البيانات في قاعدة البيانات
+        // Daten in der Datenbank aktualisieren
         $updateItem->update($updateData);
 
-        // إعادة التوجيه إلى صفحة العرض
+        // Zur Anzeige-Seite weiterleiten
         return redirect()->route('modalName.index.web')->with('success', 'Item updated successfully!');
     }
 }
