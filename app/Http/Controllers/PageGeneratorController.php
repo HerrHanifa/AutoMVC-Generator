@@ -65,8 +65,17 @@ class PageGeneratorController extends Controller
         $this->MigrationService->generateMigrationContent($tableName, $columns, $relations);
 
         // Extract column names from the columns array
-        $namescolumns = array_column($columns, 'name');
-        $this->ModelService->createModel($tableName, $namescolumns, $relations);
+        $namesColumns = array_column($columns, 'name');
+        $fileColumn=[];
+        foreach($columns as $column )
+        {
+        if(isset($column['typestring']) && $column['typestring']== 'file')
+        {
+            $fileColumn[] =$column['name'];
+        }
+    }
+     
+         $this->ModelService->createModel($tableName, $namesColumns,$fileColumn, $relations);
 
         // Generate Controllers and Routes based on type_route
         if (in_array('web', $type_routes)) {

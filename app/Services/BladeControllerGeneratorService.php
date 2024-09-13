@@ -21,7 +21,7 @@ class BladeControllerGeneratorService
             }
         }
 
-        $modelName = str_replace('Controller', '', $controllerName);
+        $modelName = Str::singular(str_replace('Controller', '', $controllerName));
         $modelNamePlural = Str::plural($modelName);
         $modelNameSmall = strtolower($modelName);
 
@@ -30,17 +30,47 @@ class BladeControllerGeneratorService
 
             $traitPath = app_path("Functions/{$functionName}Function.php");
             if (file_exists($traitPath)) {
-                $fileContent = file_get_contents($traitPath);
-
-                preg_match_all('/(?:public|protected|private)\s+function\s+[a-zA-Z0-9_]+\s*\([^)]*\)\s*\{(?:[^{}]*|\{(?:[^{}]*|\{[^{}]*\})*\})*\}/s', $fileContent, $matches);
-                foreach ($matches[0] as $method) {
+                $fileContent = file($traitPath); // قراءة الملف كسلسلة من الأسطر
+                $functions = [];
+                $insideFunction = false;
+                $braceCount = 0;
+                $currentFunction = '';
+                
+                foreach ($fileContent as $line) {
+                    // التحقق مما إذا كان السطر يحتوي على تعريف دالة عامة
+                    if (preg_match('/public\s+function\s+(\w+)/', $line, $matches)) {
+                        if ($insideFunction) {
+                            // إذا كنت داخل دالة سابقة، نعتبرها منتهية
+                            $functions[] = $currentFunction;
+                            $currentFunction = ''; // إعادة تعيين المتغير
+                        }
+                        $insideFunction = true;
+                        $braceCount = substr_count($line, '{') - substr_count($line, '}');
+                        $currentFunction .= $line;
+                    } elseif ($insideFunction) {
+                        $currentFunction .= $line;
+                        $braceCount += substr_count($line, '{') - substr_count($line, '}');
+                        // إذا كانت جميع الأقواس مغلقة، نعتبر الدالة انتهت
+                        if ($braceCount === 0) {
+                            $functions[] = $currentFunction;
+                            $insideFunction = false;
+                            $currentFunction = ''; // إعادة تعيين المتغير
+                        }
+                    }
+                }
+                
+                // التحقق من وجود دالة غير مكتملة (في حالة لم يتم إغلاقها)
+                if ($insideFunction) {
+                    $functions[] = $currentFunction;
+                }
+                
+                // التعامل مع الدوال المكتشفة
+                foreach ($functions as $method) {
                     $methodWithModel = str_replace('ModalName', $modelName, $method);
                     $methodWithModel = str_replace('modalName', $modelNameSmall, $methodWithModel);
                     $methodWithModel = str_replace('modalNames', $modelNamePlural, $methodWithModel);
-    
-                    $methods .=  $methodWithModel . "\n";
 
-
+                    $methods .= $methodWithModel . "\n";
                 }
             }
         }
@@ -71,6 +101,8 @@ namespace App\Http\Controllers\controlPanal;
 use App\Http\Controllers\Controller;
 use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
 {$traits}
 {$modelPath}
 

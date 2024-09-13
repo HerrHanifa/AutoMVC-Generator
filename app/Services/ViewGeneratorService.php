@@ -17,13 +17,15 @@ class ViewGeneratorService
             return;
         }
         // dd($tableName);
+  
+        $is_create = in_array("create", $requirdViews) ? "true" : "false";
 
         // جولة على المصفوفة واستدعاء الخدمات المناظرة
         foreach ($requirdViews as $view ) {
 
             switch ($view) {
                 case 'index':
-                    $this->createIndexView($tableName, $fields);
+                    $this->createIndexView($tableName, $fields,$is_create);
                     break;
                 case 'create':
                     $this->createCreateView($tableName, $fields);
@@ -86,11 +88,11 @@ class ViewGeneratorService
 
 
     //Index
-    private function createIndexView($tableName, $fields)
+    private function createIndexView($tableName, $fields, $is_create)
     {
         $viewPath = resource_path("views/{$tableName}/index.blade.php");
         $this->ensureDirectoryExists($viewPath);
-        $viewTemplate = $this->generateIndexViewTemplate($fields, $tableName);
+        $viewTemplate = $this->generateIndexViewTemplate($fields, $tableName,$is_create);
         File::put($viewPath, $viewTemplate);
     }
 
@@ -150,7 +152,7 @@ EOD;
         <div class="col-12 p-2">
             <div class="col-12">{$fieldLabel}</div>
             <div class="col-12 pt-3">
-                <input type="file" name="{$fieldName}_file" class="form-control" accept="image/*">
+                <input type="file" name="{$fieldName}" class="form-control" accept="image/*">
             </div>
             <div class="col-12 pt-3"></div>
         </div>
@@ -228,9 +230,10 @@ EOD;
                 </div>
                 <div class="col-12 p-3 row">
                     {$formFields}
-                </div>
-                </div>
+              
+                <div class="col-9 px-2">
                 <button type="submit" class="btn btn-success">Save</button>
+                </div>
             </form>
         </div>
     </div>
@@ -248,10 +251,17 @@ EOD;
         @extends('layouts.admin')
 
         @section('content')
-        <div class="col-12 p-3">
-            <form action="{{ route('{$routeName}', \${$tableName}->id) }}" method="POST">
+           <div class="col-12 p-3">
+        <div class="col-12 col-lg-12 p-0 " >
+            <form class="row" enctype="multipart/form-data" action="{{ route('{$routeName}', \${$tableName}->id) }}" method="POST">
                 @csrf
-                @method('PUT')
+                     <div class="col-12 col-lg-8 p-0 main-box">
+                    <div class="col-12 px-0">
+                        <div class="col-12 px-3 py-3">
+                            <span class="fas fa-info-circle"></span> التعديل
+                        </div>
+                    <div class="col-12 divider" style="min-height: 2px;"></div>
+                </div>
                 {$formFields}
                 <div class="col-12 p-3">
                 <button type="submit" class="btn btn-success">Update</button>
@@ -265,8 +275,9 @@ EOD;
 
 
     //Index Template
-    private function generateIndexViewTemplate($fields, $tableName)
+    private function generateIndexViewTemplate($fields, $tableName,$is_create)
     {
+       
         // dd($fields , $tableName);
         $items =  Str::plural($tableName);
         $viewFields = '';
@@ -274,6 +285,19 @@ EOD;
         $viewLabel = '';
         $pathCreate = Str::camel($tableName).'.create'. '.web';
         $pathEdit = Str::camel($tableName).'.edit'. '.web';
+        $pathDelete = Str::camel($tableName).'.delete'. '.web';
+        if($is_create == "true")
+        {
+        $addCreateButton = 
+    '<a href="{{ route(\'' . $pathCreate . '\') }}">
+                 <span class="btn btn-primary">
+                     <span class="fas fa-plus"></span> إضافة جديد
+                 </span>
+              </a>';
+    }
+     else{
+        $addCreateButton=null;
+     }
         foreach ($fields as $field) {
             $fieldName = $field['name'];
             $fieldLabel = Str::title(str_replace('_', ' ',$fieldName ));
@@ -296,14 +320,14 @@ EOD;
             <div class="col-12 px-0">
                 <div class="col-12 p-0 row">
                     <div class="col-12 col-lg-4 py-3 px-3">
-                        <span class="fas fa-articles"></span> <th style="width:150px;">{{$items}}</th>
+                        <span class="fas fa-articles"></span> <th style="width:150px;">{$items}</th>
                     </div>
                     <div class="col-12 col-lg-4 p-0">
                     </div>
                     <div class="col-12 col-lg-4 p-2 text-lg-endq">
-                        <a href="{{route('$pathCreate')}}">
-                        <span class="btn btn-primary"><span class="fas fa-plus"></span> إضافة جديد</span>
-                        </a>
+
+                                       {$addCreateButton}
+ 
                     </div>
                 </div>
                 <div class="col-12 divider" style="min-height: 2px;"></div>
@@ -327,6 +351,9 @@ EOD;
                                 <td>
                                     <a href="{{route('$pathEdit', \${$tableName}->id)}}">
                                         <span class="btn btn-outline-success btn-sm font-small mx-1"><span class="fas fa-wrench"></span> تعديل </span>
+                                    </a>
+                                           <a href="{{route('$pathDelete', \${$tableName}->id)}}">
+                                        <span class="btn btn-outline-danger  btn-sm font-small mx-1"><span class="fas fa-wrench"></span> حذف </span>
                                     </a>
                                 </td>
                             </tr>

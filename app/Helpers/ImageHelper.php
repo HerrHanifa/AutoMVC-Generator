@@ -4,6 +4,8 @@ namespace App\Helpers;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
+
 
 class ImageHelper
 {
@@ -34,4 +36,29 @@ class ImageHelper
         // تحميل الصورة الجديدة
         return self::handleImageUpload($newImage, $directory);
     }
+
+
+
+    public static function findFileColumns($item, $ModalName)
+    {
+        $fileColumns = [];
+        
+        // إنشاء كائن نموذج
+        $modelInstance = new $ModalName;
+    
+        // الحصول على جميع الأعمدة في الجدول المرتبط بالنموذج
+        $columns = Schema::getColumnListing($modelInstance->getTable());
+    
+        foreach ($columns as $column) {
+            $filePath = $item->$column;
+            
+            // تحقق مما إذا كان هذا العمود يحتوي على مسار ملف
+            if ($filePath && is_string($filePath) && Storage::exists($filePath)) {
+                $fileColumns[] = $column;
+            }
+        }
+        
+        return $fileColumns;
+    }
+
 }

@@ -241,19 +241,8 @@ Route::prefix('admin')->middleware(['auth','ActiveAccount'])->name('admin.')->gr
     Route::post('about/update/{id}', [AboutUsController::class, 'update'])->name('aboutus.update');
     Route::delete('about/destroy/{id}', [AboutUsController::class, 'destroy'])->name('aboutus.destroy');
 // --------------------- servcies -----------------------------
-    Route::get('services/', [ServicesController::class, 'index'])->name('services.index');
-    Route::get('services/create/', [ServicesController::class, 'create'])->name('services.create');
-    Route::post('services/store/', [ServicesController::class, 'store'])->name('services.store');
-    Route::get('services/edit/{id}', [ServicesController::class, 'edit'])->name('services.edit');
-    Route::post('services/update/{id}', [ServicesController::class, 'update'])->name('services.update');
-    Route::delete('services/destroy/{id}', [ServicesController::class, 'destroy'])->name('services.destroy');
-    // ----------------------- Our Clients --------------------------
-    Route::get('clients/', [ClientsController::class, 'index'])->name('clients.index');
-    Route::get('clients/create/', [ClientsController::class, 'create'])->name('clients.create');
-    Route::post('clients/store/', [ClientsController::class, 'store'])->name('clients.store');
-    Route::get('clients/edit/{id}', [ClientsController::class, 'edit'])->name('clients.edit');
-    Route::post('clients/update/{id}', [ClientsController::class, 'update'])->name('clients.update');
-    Route::delete('clients/destroy/{id}', [ClientsController::class, 'destroy'])->name('clients.destroy');
+
+
      // ----------------------- Our Cards --------------------------
      Route::get('cards/', [CardsController::class, 'index'])->name('cards.index');
      Route::get('cards/create/', [CardsController::class, 'create'])->name('cards.create');
@@ -268,13 +257,6 @@ Route::prefix('admin')->middleware(['auth','ActiveAccount'])->name('admin.')->gr
     Route::get('contact_us/edit/{id}', [ContactUsController::class, 'edit'])->name('contact_us.edit');
     Route::post('contact_us/update/{id}', [ContactUsController::class, 'update'])->name('contact_us.update');
     Route::delete('contact_us/destroy/{id}', [ContactUsController::class, 'destroy'])->name('contact_us.destroy');
-    // ----------------------- Contact Us --------------------------
-    Route::get('slider/', [SliderController::class, 'index'])->name('slider.index');
-    Route::get('slider/create/', [SliderController::class, 'create'])->name('slider.create');
-    Route::post('slider/store/', [SliderController::class, 'store'])->name('slider.store');
-    Route::get('slider/edit/{id}', [SliderController::class, 'edit'])->name('slider.edit');
-    Route::post('slider/update/{id}', [SliderController::class, 'update'])->name('slider.update');
-    Route::delete('slider/destroy/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
     // ----------------------- Our Solution --------------------------
     Route::get('our_solution/', [OurSolutionController::class, 'index'])->name('our_solution.index');
     Route::get('our_solution/create/', [OurSolutionController::class, 'create'])->name('our_solution.create');
@@ -334,52 +316,47 @@ Route::get('/التواصل', [indexController::class,'contuct'])->name('contuct
 
 ############################################# End front end ######################################################
 
-Route::get('/test1/create', [App\Http\Controllers\Test1Controller::class, 'create'])->name('test1.create.web');
-Route::get('/test1/edit', [App\Http\Controllers\Test1Controller::class, 'edit'])->name('test1.edit.web');
-Route::get('/test1/index', [App\Http\Controllers\Test1Controller::class, 'index'])->name('test1.index.web');
-Route::get('/test1/store', [App\Http\Controllers\Test1Controller::class, 'store'])->name('test1.store.web');
-Route::get('/test1/update', [App\Http\Controllers\Test1Controller::class, 'update'])->name('test1.update.web');
-Route::get('/test2/create', [App\Http\Controllers\controlPanal\Test2Controller::class, 'create'])->name('test2.create.web');
-Route::get('/test2/edit', [App\Http\Controllers\controlPanal\Test2Controller::class, 'edit'])->name('test2.edit.web');
-Route::get('/test2/index', [App\Http\Controllers\controlPanal\Test2Controller::class, 'index'])->name('test2.index.web');
-Route::get('/test2/store', [App\Http\Controllers\controlPanal\Test2Controller::class, 'store'])->name('test2.store.web');
-Route::get('/test2/update', [App\Http\Controllers\controlPanal\Test2Controller::class, 'update'])->name('test2.update.web');
-Route::get('/test3/create', [App\Http\Controllers\controlPanal\Test3Controller::class, 'create'])->name('test3.create.web');
-Route::get('/test3/edit', [App\Http\Controllers\controlPanal\Test3Controller::class, 'edit'])->name('test3.edit.web');
-Route::get('/test3/index', [App\Http\Controllers\controlPanal\Test3Controller::class, 'index'])->name('test3.index.web');
-Route::get('/test3/store', [App\Http\Controllers\controlPanal\Test3Controller::class, 'store'])->name('test3.store.web');
-Route::get('/test3/update', [App\Http\Controllers\controlPanal\Test3Controller::class, 'update'])->name('test3.update.web');
-Route::get('/test4/create', [App\Http\Controllers\controlPanal\Test4Controller::class, 'create'])->name('test4.create.web');
-Route::get('/test4/edit', [App\Http\Controllers\controlPanal\Test4Controller::class, 'edit'])->name('test4.edit.web');
-Route::get('/test4/index', [App\Http\Controllers\controlPanal\Test4Controller::class, 'index'])->name('test4.index.web');
-Route::post('/test4/store', [App\Http\Controllers\controlPanal\Test4Controller::class, 'store'])->name('test4.store.web');
-Route::post('/test4/update', [App\Http\Controllers\controlPanal\Test4Controller::class, 'update'])->name('test4.update.web');
+
+############################################# Exel Export ######################################################
 Route::get('/exelexport/create', [App\Http\Controllers\controlPanal\ExelexportController::class, 'create'])->name('exelexport.create.web');
 Route::get('/exelexport/index', [App\Http\Controllers\controlPanal\ExelexportController::class, 'index'])->name('exelexport.index.web');
 Route::get('/exelexport/store', [App\Http\Controllers\controlPanal\ExelexportController::class, 'store'])->name('exelexport.store.web');
-Route::get('/imagepro/create', [App\Http\Controllers\controlPanal\ImageproController::class, 'create'])->name('imagepro.create.web');
-Route::get('/imagepro/edit', [App\Http\Controllers\controlPanal\ImageproController::class, 'edit'])->name('imagepro.edit.web');
-Route::get('/imagepro/index', [App\Http\Controllers\controlPanal\ImageproController::class, 'index'])->name('imagepro.index.web');
-Route::post('/imagepro/store', [App\Http\Controllers\controlPanal\ImageproController::class, 'store'])->name('imagepro.store.web');
-Route::post('/imagepro/update', [App\Http\Controllers\controlPanal\ImageproController::class, 'update'])->name('imagepro.update.web');
-Route::get('/imagetest/create', [App\Http\Controllers\controlPanal\ImagetestController::class, 'create'])->name('imagetest.create.web');
-Route::get('/imagetest/edit', [App\Http\Controllers\controlPanal\ImagetestController::class, 'edit'])->name('imagetest.edit.web');
-Route::get('/imagetest/index', [App\Http\Controllers\controlPanal\ImagetestController::class, 'index'])->name('imagetest.index.web');
-Route::post('/imagetest/store', [App\Http\Controllers\controlPanal\ImagetestController::class, 'store'])->name('imagetest.store.web');
-Route::post('/imagetest/update', [App\Http\Controllers\controlPanal\ImagetestController::class, 'update'])->name('imagetest.update.web');
-Route::get('/imagetest1/create', [App\Http\Controllers\controlPanal\Imagetest1Controller::class, 'create'])->name('imagetest1.create.web');
-Route::get('/imagetest1/edit', [App\Http\Controllers\controlPanal\Imagetest1Controller::class, 'edit'])->name('imagetest1.edit.web');
-Route::get('/imagetest1/index', [App\Http\Controllers\controlPanal\Imagetest1Controller::class, 'index'])->name('imagetest1.index.web');
-Route::post('/imagetest1/store', [App\Http\Controllers\controlPanal\Imagetest1Controller::class, 'store'])->name('imagetest1.store.web');
-Route::post('/imagetest1/update', [App\Http\Controllers\controlPanal\Imagetest1Controller::class, 'update'])->name('imagetest1.update.web');
-Route::get('/imagetest2/create', [App\Http\Controllers\controlPanal\Imagetest2Controller::class, 'create'])->name('imagetest2.create.web');
-Route::get('/imagetest2/edit', [App\Http\Controllers\controlPanal\Imagetest2Controller::class, 'edit'])->name('imagetest2.edit.web');
-Route::get('/imagetest2/index', [App\Http\Controllers\controlPanal\Imagetest2Controller::class, 'index'])->name('imagetest2.index.web');
-Route::post('/imagetest2/store', [App\Http\Controllers\controlPanal\Imagetest2Controller::class, 'store'])->name('imagetest2.store.web');
-Route::post('/imagetest2/update', [App\Http\Controllers\controlPanal\Imagetest2Controller::class, 'update'])->name('imagetest2.update.web');
-Route::get('/imagetest3/create', [App\Http\Controllers\controlPanal\Imagetest3Controller::class, 'create'])->name('imagetest3.create.web');
-Route::get('/imagetest3/edit/{id}', [App\Http\Controllers\controlPanal\Imagetest3Controller::class, 'edit'])->name('imagetest3.edit.web');
-Route::get('/imagetest3/index', [App\Http\Controllers\controlPanal\Imagetest3Controller::class, 'index'])->name('imagetest3.index.web');
-Route::get('/imagetest3/show', [App\Http\Controllers\controlPanal\Imagetest3Controller::class, 'show'])->name('imagetest3.show.web');
-Route::post('/imagetest3/store', [App\Http\Controllers\controlPanal\Imagetest3Controller::class, 'store'])->name('imagetest3.store.web');
-Route::post('/imagetest3/update', [App\Http\Controllers\controlPanal\Imagetest3Controller::class, 'update'])->name('imagetest3.update.web');
+############################################# Exel Export end ##################################################
+
+Route::get('/headercode/create', [App\Http\Controllers\controlPanal\HeadercodeController::class, 'create'])->name('headercode.create.web');
+Route::get('/headercode/delete/{id}', [App\Http\Controllers\controlPanal\HeadercodeController::class, 'delete'])->name('headercode.delete.web');
+Route::get('/headercode/edit/{id}', [App\Http\Controllers\controlPanal\HeadercodeController::class, 'edit'])->name('headercode.edit.web');
+Route::get('/headercode/index', [App\Http\Controllers\controlPanal\HeadercodeController::class, 'index'])->name('headercode.index.web');
+Route::post('/headercode/store', [App\Http\Controllers\controlPanal\HeadercodeController::class, 'store'])->name('headercode.store.web');
+Route::post('/headercode/update/{id}', [App\Http\Controllers\controlPanal\HeadercodeController::class, 'update'])->name('headercode.update.web');
+
+
+Route::get('/messages/delete/{id}', [App\Http\Controllers\controlPanal\MessagesController::class, 'delete'])->name('messages.delete.web');
+Route::get('/messages/index', [App\Http\Controllers\controlPanal\MessagesController::class, 'index'])->name('messages.index.web');
+
+
+Route::get('/service/create', [App\Http\Controllers\controlPanal\ServiceController::class, 'create'])->name('service.create.web');
+Route::get('/service/delete/{id}', [App\Http\Controllers\controlPanal\ServiceController::class, 'delete'])->name('service.delete.web');
+Route::get('/service/edit/{id}', [App\Http\Controllers\controlPanal\ServiceController::class, 'edit'])->name('service.edit.web');
+Route::get('/service/index', [App\Http\Controllers\controlPanal\ServiceController::class, 'index'])->name('service.index.web');
+Route::post('/service/store', [App\Http\Controllers\controlPanal\ServiceController::class, 'store'])->name('service.store.web');
+Route::post('/service/update/{id}', [App\Http\Controllers\controlPanal\ServiceController::class, 'update'])->name('service.update.web');
+Route::get('/rating/create', [App\Http\Controllers\controlPanal\RatingController::class, 'create'])->name('rating.create.web');
+Route::get('/rating/delete/{id}', [App\Http\Controllers\controlPanal\RatingController::class, 'delete'])->name('rating.delete.web');
+Route::get('/rating/edit/{id}', [App\Http\Controllers\controlPanal\RatingController::class, 'edit'])->name('rating.edit.web');
+Route::get('/rating/index', [App\Http\Controllers\controlPanal\RatingController::class, 'index'])->name('rating.index.web');
+Route::post('/rating/store', [App\Http\Controllers\controlPanal\RatingController::class, 'store'])->name('rating.store.web');
+Route::post('/rating/update/{id}', [App\Http\Controllers\controlPanal\RatingController::class, 'update'])->name('rating.update.web');
+Route::get('/partner/create', [App\Http\Controllers\controlPanal\PartnerController::class, 'create'])->name('partner.create.web');
+Route::get('/partner/delete/{id}', [App\Http\Controllers\controlPanal\PartnerController::class, 'delete'])->name('partner.delete.web');
+Route::get('/partner/edit/{id}', [App\Http\Controllers\controlPanal\PartnerController::class, 'edit'])->name('partner.edit.web');
+Route::get('/partner/index', [App\Http\Controllers\controlPanal\PartnerController::class, 'index'])->name('partner.index.web');
+Route::post('/partner/store', [App\Http\Controllers\controlPanal\PartnerController::class, 'store'])->name('partner.store.web');
+Route::post('/partner/update/{id}', [App\Http\Controllers\controlPanal\PartnerController::class, 'update'])->name('partner.update.web');
+
+Route::get('/mainpage/create', [App\Http\Controllers\controlPanal\MainpageController::class, 'create'])->name('mainpage.create.web');
+Route::get('/mainpage/delete/{id}', [App\Http\Controllers\controlPanal\MainpageController::class, 'delete'])->name('mainpage.delete.web');
+Route::get('/mainpage/edit/{id}', [App\Http\Controllers\controlPanal\MainpageController::class, 'edit'])->name('mainpage.edit.web');
+Route::get('/mainpage/index', [App\Http\Controllers\controlPanal\MainpageController::class, 'index'])->name('mainpage.index.web');
+Route::post('/mainpage/store', [App\Http\Controllers\controlPanal\MainpageController::class, 'store'])->name('mainpage.store.web');
+Route::post('/mainpage/update/{id}', [App\Http\Controllers\controlPanal\MainpageController::class, 'update'])->name('mainpage.update.web');

@@ -16,15 +16,16 @@ class ModelService
      * @param array $relations
      * @return void
      */
-    public function createModel($tableName, $columns = [], $hidden = null, $relations = null)
+    public function createModel($tableName, $columns = [], $fileColumn = [], $hidden = null, $relations = null)
     {
         $fillable = $columns ? "['" . implode("', '", $columns) . "']" : "[]";
         $hiddenFields = $hidden ? "['" . implode("', '", $hidden) . "']" : "[]";
+        $fileColumns = $fileColumn ? "['" . implode("', '", $fileColumn) . "']" : "[]";
         $tableName = Str::snake(Str::pluralStudly($tableName));
 
         // تحويل اسم الجدول إلى اسم موديل
-        $modelName= ucfirst(Str::singular($tableName));
-        // dd($modelName);
+        $modelName = ucfirst(Str::singular($tableName));
+
         // مسار ملف الموديل
         $modelPath = app_path("Models/{$modelName}.php");
 
@@ -47,6 +48,12 @@ class {$modelName} extends Model
     protected \$table = '{$tableName}';
     protected \$fillable = {$fillable};
     protected \$hidden = {$hiddenFields};
+    protected \$fileColumn = {$fileColumns};
+
+    public function fileColumns()
+    {
+        return \$this->fileColumn;
+    }
 
     {$relationsContent}
 }
@@ -94,4 +101,3 @@ EOD;
 EOD;
     }
 }
-

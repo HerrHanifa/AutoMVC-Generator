@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    use HasFactory;
+    protected $table = 'services';
+    protected $fillable = ['name', 'name_en', 'keywords', 'keywords_en', 'image', 'description', 'description_en', 'description_meta', 'description_meta_en'];
+    protected $hidden = [];
+    protected $fileColumn = ['image'];
 
-    protected $table="services";
-    protected $fillable = ['icons', 'title', 'description','arabicTitle','arabicDescription'];
- 
+    public function fileColumns()
+    {
+        return $this->fileColumn;
+    }
+
+    
 }

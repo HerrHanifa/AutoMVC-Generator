@@ -74,7 +74,7 @@ EOD;
     {
         $content = '';
         foreach ($fields as $field) {
-            $nullable = isset($field['nullable']) && $field['nullable'] ? '->nullable()' : '';
+            $nullable = isset($field['nullable']) && $field['nullable'] ? '->nullable()' : '->nullable()'; // إضافة ->nullable() لجميع الأعمدة
             $content .= "\$table->{$field['type']}('{$field['name']}'){$nullable};\n";
         }
         return $content;

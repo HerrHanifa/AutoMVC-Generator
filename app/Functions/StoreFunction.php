@@ -16,7 +16,7 @@ trait StoreFunction
         // حلقة عبر الملفات لمعرفة ما إذا كانت صورة
         foreach ($files as $key => $file) {
             // التحقق مما إذا كان الملف صورة
-            if ($file->isValid() && in_array($file->extension(), ['jpeg', 'png', 'jpg', 'gif', 'svg','webp'])) {
+            if ($file->isValid() && in_array($file->extension(), ['jpeg', 'png', 'jpg', 'gif', 'svg','webp','mp4'])) {
                 // استخدم الهيلبر لتحميل الصورة والحصول على مسارها
                 $newItem[$key] = ImageHelper::handleImageUpload($file, 'uploads/ModalName_images');
             }

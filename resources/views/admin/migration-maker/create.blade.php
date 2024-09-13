@@ -203,8 +203,12 @@
                 typeSelect.addEventListener('change', (event) => {
                     if (event.target.value === 'string') {
                         typestringDiv.style.display = 'block';
+                   
                     } else {
+
                         typestringDiv.style.display = 'none';
+                        typestringSelect.value=null;
+
                     }
                 });
 
