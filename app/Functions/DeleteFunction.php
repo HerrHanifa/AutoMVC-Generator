@@ -15,29 +15,31 @@ trait DeleteFunction
      */
     public function delete($id)
     {
-        // العثور على العنصر باستخدام الـ ID
-        $item = ModalName::findOrFail($id);
+    // Das Element anhand der ID finden
+    $item = ModalName::findOrFail($id);
 
-        // الحصول على أعمدة الملفات
+        // Die Datei-Spalten abrufen
         $fileColumns = $item->fileColumns();
 
         if ($fileColumns) {
             foreach ($fileColumns as $column) {
-                // الحصول على المسار الكامل للملف في مجلد public
+                // Den vollständige Pfad der Datei im Public-Ordener abrufen
                 $filePath = public_path($item->$column);
 
-                // التحقق من وجود الملف ثم حذفه
+               // Überprüfen, ob eine Datei im Pfad vorhanden ist oder nicht
                 if (File::exists($filePath)) {
                     File::delete($filePath);
                 }
             }
         }
 
-        // حذف السجل من قاعدة البيانات
+           // Die Datei aus der Datenbank löschen
+
         $item->delete();
 
-        // إعادة التوجيه إلى صفحة العرض مع رسالة نجاح
-        return redirect()->route('modalName.index.web')
+    // Weiterleiten zur Anzeige-Seite mit einer Erfolgsmeldung
+
+    return redirect()->route('modalName.index.web')
                          ->with('success', 'Item deleted successfully!');
     }
 }

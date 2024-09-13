@@ -8,24 +8,25 @@ trait StoreFunction
 {
     public function store(Request $request)
     {
+        // Alle Daten aus der Anfrage abrufen
         $newItem = $request->all();
 
-        // احصل على جميع الملفات من الطلب
+        // Alle Dateien aus der Anfrage abrufen (falls Datei vorhanden sind)
         $files = $request->allFiles();
         
-        // حلقة عبر الملفات لمعرفة ما إذا كانت صورة
+        // Schleife durch die Dateien, um Bilder zu verarbeiten
         foreach ($files as $key => $file) {
-            // التحقق مما إذا كان الملف صورة
+            // Überprüfen, ob die Datei ein gültiges Bild ist
             if ($file->isValid() && in_array($file->extension(), ['jpeg', 'png', 'jpg', 'gif', 'svg','webp','mp4'])) {
-                // استخدم الهيلبر لتحميل الصورة والحصول على مسارها
+                // Hilfsfunktion verwenden, um das neue Bild hochzuladen und den Pfad zu erhalten
                 $newItem[$key] = ImageHelper::handleImageUpload($file, 'uploads/ModalName_images');
             }
         }
         
-        // إنشاء العنصر الجديد في قاعدة البيانات
+        // Das neue Element in der Datenbank erstellen
         ModalName::create($newItem);
         
-        // إعادة التوجيه إلى صفحة العرض
+        // Zur Anzeige-Seite weiterleiten
         return redirect(route('modalName.index.web'));
         
     }

@@ -22,7 +22,7 @@ trait UpdateFunction
         // Alle Daten aus der Anfrage abrufen
         $updateData = $request->all();
     
-        // Alle Dateien aus der Anfrage abrufen (falls Bilder vorhanden sind)
+        // Alle Dateien aus der Anfrage abrufen (falls Datei vorhanden sind)
         $files = $request->allFiles();
 
         // Schleife durch die Dateien, um Bilder zu verarbeiten
