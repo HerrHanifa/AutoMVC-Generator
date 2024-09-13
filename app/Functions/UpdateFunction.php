@@ -16,13 +16,13 @@ trait UpdateFunction
      */
     public function update(Request $request, $id)
     {
-        // جلب العنصر المراد تحديثه من قاعدة البيانات
+        // Das zu aktualisierende Element aus der Datenbank abrufen
         $updateItem = ModalName::findOrFail($id);
     
-        // الحصول على جميع البيانات من الطلب
+        // Alle Daten aus der Anfrage abrufen
         $updateData = $request->all();
     
-        // الحصول على جميع الملفات من الطلب (في حال وجود صور)
+        // Alle Dateien aus der Anfrage abrufen (falls Bilder vorhanden sind)
         $files = $request->allFiles();
 
         // Schleife durch die Dateien, um Bilder zu verarbeiten
